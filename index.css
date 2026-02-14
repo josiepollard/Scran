@@ -68,6 +68,68 @@
 }
 
 
+/*main banner*/
+/* Hero section */
+.scran-hero-main {
+  position: relative;
+  width: 100%;
+  min-height: 350px;
+  background-image: url('images/main-banner.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Dark overlay for readability */
+.scran-hero-main-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* Content */
+.scran-hero-main-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* Title */
+.scran-hero-main-title {
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Subtitle */
+.scran-hero-main-subtitle {
+  font-size: 20px;
+  margin-bottom: 25px;
+  opacity: 0.95;
+}
+
+/* Button */
+.scran-hero-main-btn {
+  font-size: 18px;
+  padding: 12px 28px;
+  font-weight: 500;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .scran-hero {
+    min-height: 400px;
+  }
+
+  .scran-hero-title {
+    font-size: 32px;
+  }
+
+  .scran-hero-subtitle {
+    font-size: 16px;
+  }
+}
 
 
 

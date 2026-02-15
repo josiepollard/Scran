@@ -74,7 +74,7 @@
   position: relative;
   width: 100%;
   min-height: 350px;
-  background-image: url('images/main-banner.png'); 
+  background-image: url('../images/main-banner.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -84,7 +84,7 @@
 .scran-hero-main-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.35);
 }
 
 /* Content */
@@ -115,6 +115,47 @@
   padding: 12px 28px;
   font-weight: 500;
 }
+
+
+
+
+/*scrandom banner*/
+/* Hero section */
+.scran-hero-scrandom {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  background-image: url('../images/scrandom-banner.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+
+/* Content */
+.scran-hero-scrandom-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* Title */
+.scran-hero-scrandom-title {
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Subtitle */
+.scran-hero-scrandom-subtitle {
+  font-size: 20px;
+  margin-bottom: 25px;
+  opacity: 0.95;
+}
+
+
 
 /* Mobile */
 @media (max-width: 768px) {

@@ -14,11 +14,11 @@
 </head>
 
 <body>
+
 <!-- NAVBAR START -->
 <!-- uses includes/navbar.php which we will reuse throughout the website-->
 <?php include 'includes/navbar.php'; ?>
 <!-- NAVBAR END -->
-
 
 
 <!-- BANNER START -->

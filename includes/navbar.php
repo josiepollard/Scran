@@ -1,4 +1,5 @@
 <!-- NAV START -->
+<!-- We will reuse throughout the website-->
 <nav class="navbar navbar-expand-lg navbar-dark scran-nav sticky-top">
   <div class="container-fluid px-3 px-lg-4">
 

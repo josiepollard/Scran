@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles/index.css">
-    <link rel="stylesheet" type="text/css" href="styles/home.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Scran</title>
-    <link rel="icon" type="image/x-icon" href="/images/favi.png">
-</head>
-
-<body>
 <!-- NAV START -->
 <nav class="navbar navbar-expand-lg navbar-dark scran-nav sticky-top">
   <div class="container-fluid px-3 px-lg-4">
@@ -30,7 +15,7 @@
     <div class="collapse navbar-collapse" id="scranNavbar">
       <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0 gap-lg-2 scran-links">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.html">Home</a> <!--Active page-->
+          <a class="nav-link"  href="index.php">Home</a> 
 
        <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" 
@@ -71,24 +56,3 @@
   </div>
 </nav>
 <!-- NAV END -->
-
-<!-- BANNER START -->
-<section class="scran-hero-main d-flex align-items-center justify-content-center text-center">
-  <div class="scran-hero-main-overlay"></div>
-
-  <div class="scran-hero-main-content container">
-    <h1 class="scran-hero-main-title">With SCRAN, you CAN</h1>
-    <p class="scran-hero-main-subtitle">
-      Make easy everyday recipes, perfect for any budget and every occasion
-    </p>
-
-    <a href="#" class="btn btn-warning scran-hero-main-btn">
-      Browse recipes
-    </a>
-  </div>
-</section>
-<!-- BANNER END -->
-
-
-</body>
-</html>

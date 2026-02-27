@@ -29,23 +29,20 @@
         </a>
 
         <ul class="dropdown-menu scran-dropdown">
-            <li><a class="dropdown-item" href="#">All Recipes</a></li>
-            <li><a class="dropdown-item" href="#">Breakfast</a></li>
-            <li><a class="dropdown-item" href="#">Lunch</a></li>
-            <li><a class="dropdown-item" href="#">Dinner</a></li>
-            <li><a class="dropdown-item" href="#">Desserts</a></li>
-            <li><a class="dropdown-item" href="#">Snacks</a></li>
+            <li><a class="dropdown-item" href="recipes.php">All Recipes</a></li>
+            <li><a class="dropdown-item" href="breakfast.php">Breakfast</a></li>
+            <li><a class="dropdown-item" href="desserts.php">Desserts</a></li>
         </ul>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Whats in your cupboard?</a>
+          <a class="nav-link" href="whatsInYourCupboard.php">Whats in your cupboard?</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Scrandom!</a>
+          <a class="nav-link" href="scrandom.php">Scrandom!</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Saved recipes</a>
+          <a class="nav-link" href="savedRecipes.php">Saved recipes</a>
         </li>
       </ul>
 

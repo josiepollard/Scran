@@ -31,16 +31,80 @@
       Make easy everyday recipes, perfect for any budget and every occasion
     </p>
 
-    <a href="#" class="btn btn-warning scran-hero-main-btn">
-      Browse recipes
-    </a>
+   
   </div>
 </section>
 <!-- BANNER END -->
 
 
+<!-- RANDOM RECIPES SECTION START -->
+<section class="container my-5">
+  <h2 class="text-center mb-4">Discover Something Tasty</h2>
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-4" id="random-recipes">
+    <!-- Recipes will load here -->
+  </div>
+</section>
+<!-- RANDOM RECIPES SECTION END -->
 
- 
+
+
+<script>
+async function getRandomRecipes() {
+    const container = document.getElementById("random-recipes");
+    container.innerHTML = "";
+
+    try {
+        const requests = [];
+
+        // Get 12
+        for (let i = 0; i < 12; i++) {
+            requests.push(
+                fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+                .then(res => res.json())
+            );
+        }
+
+        // Wait for all 12 to finish
+        const results = await Promise.all(requests);
+
+        results.forEach(result => {
+            const meal = result.meals[0];
+           
+
+        function truncateText(text, maxLength) {
+          return text.length > maxLength
+            ? text.slice(0, maxLength) + "..."
+            : text;
+        }
+
+        const recipeCard = `
+          <div class="col">
+            <div class="card h-100 shadow-sm">
+              <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
+              <div class="card-body d-flex flex-column">
+                  <h5 class="card-title" title="${meal.strMeal}">
+                      ${truncateText(meal.strMeal, 25)}
+                  </h5>
+                  <a href="recipe.php?id=${meal.idMeal}" class="btn btn-warning mt-auto">
+                      View Recipe
+                  </a>
+            </div>
+            </div>
+          </div>
+        `;
+
+            container.innerHTML += recipeCard;
+        });
+
+    } catch (error) {
+        container.innerHTML = "<p class='text-center'>Failed to load recipes. Please try again.</p>";
+        console.error(error);
+    }
+}
+// Load recipes when page loads
+document.addEventListener("DOMContentLoaded", getRandomRecipes);
+</script>
+
 
 </body>
 </html>

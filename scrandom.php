@@ -17,7 +17,7 @@
 
 <!-- NAVBAR START -->
 <!-- uses includes/navbar.php which we will reuse throughout the website-->
-<?php include 'includes/navbar.php'; ?>
+<?php include 'includes/navbar.html'; ?>
 <!-- NAVBAR END -->
 
 
@@ -31,6 +31,9 @@
 </section>
 <!-- BANNER END -->
 
+<!-- FOOTER START -->
+<?php include 'includes/footer.html'; ?>
+<!-- FOOTER END -->
 
 </body>
 </html>

@@ -19,7 +19,7 @@
 <!-- uses includes/navbar.php which we will reuse throughout the website-->
 <?php include 'includes/navbar.html'; ?>
 <!-- NAVBAR END -->
-
+ 
 
 <!-- BANNER START -->
 <section class="scran-hero-main d-flex align-items-center justify-content-center text-center">
@@ -39,9 +39,28 @@
 
 <!-- RANDOM RECIPES SECTION START -->
 <section class="container my-5">
-  <h2 class="text-center mb-4">Discover Something Tasty</h2>
-<div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-4" id="random-recipes">
-    <!-- Recipes will load here -->
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="mb-0">Discover Something Tasty</h2>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-secondary btn-sm" type="button"
+              data-bs-target="#recipesCarousel" data-bs-slide="prev">
+        ‹
+      </button>
+      <button class="btn btn-outline-secondary btn-sm" type="button"
+              data-bs-target="#recipesCarousel" data-bs-slide="next">
+        ›
+      </button>
+    </div>
+  </div>
+
+  <div id="recipesCarousel" class="carousel slide"
+     data-bs-ride="carousel"
+     data-bs-interval="6000"
+     data-bs-pause="hover">
+    <div class="carousel-inner" id="recipes-carousel-inner">
+      <!-- Slides injected here -->
+    </div>
   </div>
 </section>
 <!-- RANDOM RECIPES SECTION END -->
@@ -51,62 +70,78 @@
 <!-- FOOTER END -->
 
 <script>
-async function getRandomRecipes() {
-    const container = document.getElementById("random-recipes");
-    container.innerHTML = "";
-
-    try {
-        const requests = [];
-
-        // Get 12
-        for (let i = 0; i < 12; i++) {
-            requests.push(
-                fetch("https://www.themealdb.com/api/json/v1/1/random.php")
-                .then(res => res.json())
-            );
-        }
-
-        // Wait for all 12 to finish
-        const results = await Promise.all(requests);
-
-        results.forEach(result => {
-            const meal = result.meals[0];
-           
-
-        function truncateText(text, maxLength) {
-          return text.length > maxLength
-            ? text.slice(0, maxLength) + "..."
-            : text;
-        }
-
-        const recipeCard = `
-          <div class="col">
-            <div class="card h-100 shadow-sm">
-              <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
-              <div class="card-body d-flex flex-column">
-                  <h5 class="card-title" title="${meal.strMeal}">
-                      ${truncateText(meal.strMeal, 25)}
-                  </h5>
-                  <a href="recipe.php?id=${meal.idMeal}" class="btn btn-warning mt-auto">
-                      View Recipe
-                  </a>
-            </div>
-            </div>
-          </div>
-        `;
-
-            container.innerHTML += recipeCard;
-        });
-
-    } catch (error) {
-        container.innerHTML = "<p class='text-center'>Failed to load recipes. Please try again.</p>";
-        console.error(error);
-    }
+function truncateText(text, maxLength) {
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
-// Load recipes when page loads
-document.addEventListener("DOMContentLoaded", getRandomRecipes);
-</script>
 
+function createRecipeCard(meal) {
+  return `
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="${meal.strMealThumb}" class="card-img-top recipe-card-img" alt="${meal.strMeal}">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title" title="${meal.strMeal}">
+            ${truncateText(meal.strMeal, 40)}
+          </h5>
+          <a href="recipe.php?id=${meal.idMeal}" class="btn btn-warning mt-auto">
+            View Recipe
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Break recipes into slides of 4
+function chunkArray(arr, size) {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size) {
+    chunks.push(arr.slice(i, i + size));
+  }
+  return chunks;
+}
+
+async function getRandomRecipesCarousel() {
+  const inner = document.getElementById("recipes-carousel-inner");
+  inner.innerHTML = `<div class="text-center py-5">Loading recipes...</div>`;
+
+  try {
+    const count = 16;   // total recipes
+    const perSlide = 4; // show 4 per slide
+
+    const requests = Array.from({ length: count }, () =>
+      fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+        .then(res => res.json())
+    );
+
+    const results = await Promise.all(requests);
+
+    const meals = results
+      .map(r => r?.meals?.[0] ?? null)
+      .filter(Boolean);
+
+    const slides = chunkArray(meals, perSlide);
+
+    inner.innerHTML = slides.map((slideMeals, index) => `
+      <div class="carousel-item ${index === 0 ? "active" : ""}">
+        <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-4">
+          ${slideMeals.map(createRecipeCard).join("")}
+        </div>
+      </div>
+    `).join("");
+
+  } catch (error) {
+    console.error(error);
+    inner.innerHTML = `
+      <div class="text-center py-5 text-danger">
+        Failed to load recipes.
+      </div>
+    `;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", getRandomRecipesCarousel);
+</script>
 
 </body>
 </html>

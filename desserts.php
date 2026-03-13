@@ -31,9 +31,88 @@
 </section>
 <!-- BANNER END -->
 
-<!-- FOOTER START -->
+<!-- BREAKFAST RECIPES -->
+<section class="container my-5">
+
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4" id="breakfast-container">
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
 <?php include 'includes/footer.html'; ?>
-<!-- FOOTER END -->
+
+
+<script>
+
+function truncateText(text, maxLength){
+  return text.length > maxLength ? text.slice(0,maxLength) + "..." : text;
+}
+
+
+function createRecipeCard(meal){
+
+return `
+<div class="col">
+  <div class="card h-100 shadow-sm">
+
+    <img src="${meal.strMealThumb}"
+         class="card-img-top recipe-card-img"
+         alt="${meal.strMeal}">
+
+    <div class="card-body d-flex flex-column">
+
+      <h5 class="card-title" title="${meal.strMeal}">
+        ${truncateText(meal.strMeal,25)}
+      </h5>
+
+      <a href="recipe.php?id=${meal.idMeal}"
+         class="btn btn-warning mt-auto">
+         View Recipe
+      </a>
+
+    </div>
+
+  </div>
+</div>
+`;
+
+}
+
+
+async function loadBreakfastRecipes(){
+
+const container = document.getElementById("breakfast-container");
+
+container.innerHTML = `<div class="text-center py-5">Loading breakfast recipes...</div>`;
+
+try{
+
+const response = await fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Dessert");
+
+const data = await response.json();
+
+const meals = data.meals || [];
+
+container.innerHTML = meals.map(createRecipeCard).join("");
+
+}
+
+catch(error){
+
+console.error(error);
+
+container.innerHTML = `<p class="text-danger text-center">Failed to load recipes.</p>`;
+
+}
+
+}
+
+
+document.addEventListener("DOMContentLoaded", loadBreakfastRecipes);
+
+</script>
 
 
 </body>

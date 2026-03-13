@@ -65,6 +65,14 @@
 </section>
 <!-- RANDOM RECIPES SECTION END -->
 
+
+
+
+<!-- scrandom  -->
+<!-- links to category pages  -->
+
+
+
 <!-- FOOTER START -->
 <?php include 'includes/footer.html'; ?>
 <!-- FOOTER END -->

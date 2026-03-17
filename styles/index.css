@@ -1,139 +1,238 @@
+/* =========================
+   GLOBAL VARIABLES
+========================= */
+
 :root{
-    --mustard: #fdb302;
-    --dark-grey: #1f1f1f;
+    --mustard:#fdb302;
+    --dark-grey:#1f1f1f;
 }
 
-.scran-nav {
+
+/* =========================
+   NAVBAR
+========================= */
+
+.scran-nav{
+    background:var(--dark-grey);
+    padding:18px 0;
+}
+
+.scran-logo{
+    font-size:50px;
+    font-weight:600;
+    font-family:'Fredoka',sans-serif;
+}
+
+
+/* =========================
+   HERO / BANNER
+========================= */
+
+.scran-hero-main{
+  position:relative;
+  width:100%;
+  min-height:300px;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+.scran-hero-main-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+}
+
+.scran-hero-main-content{
+  position:relative;
+  z-index:2;
+  color:white;
+  font-family:'Fredoka',sans-serif;
+}
+
+.scran-hero-main-title{
+  font-size:48px;
+  font-weight:600;
+}
+
+
+/* =========================
+   PAGE BANNER IMAGES
+========================= */
+
+.page-home .scran-hero-main{
+  background-image:url('../images/index-banner.png');
+}
+
+.page-recipes .scran-hero-main{
+  background-image:url('../images/recipes-banner.png');
+}
+
+.page-breakfast .scran-hero-main{
+  background-image:url('../images/breakfast-banner.png');
+}
+
+.page-desserts .scran-hero-main{
+  background-image:url('../images/desserts-banner.png');
+}
+
+.page-starter .scran-hero-main{
+  background-image:url('../images/starter-banner.png');
+}
+
+.page-side .scran-hero-main{
+  background-image:url('../images/sides-banner.png');
+}
+
+.page-vegetarian .scran-hero-main{
+  background-image:url('../images/veggie-banner.png');
+}
+
+.page-vegan .scran-hero-main{
+  background-image:url('../images/vegan-banner.png');
+}
+
+.page-saved .scran-hero-main{
+  background-image:url('../images/saved-banner.png');
+}
+
+.page-cupboard .scran-hero-main{
+  background-image:url('../images/cupboard-banner.png');
+}
+
+.page-contact .scran-hero-main{
+  background-image:url('../images/contact-banner.png');
+}
+
+.page-scrandom .scran-hero-main{
+  background-image:url('../images/scrando-banner.png');
+}
+
+
+
+
+/* =========================
+   RECIPE CARDS
+========================= */
+
+.recipe-card-img{
+  height:180px;
+  object-fit:cover;
+}
+
+
+/* =========================
+   CATEGORY CARDS
+========================= */
+
+.category-card{
+  text-decoration:none;
+  color:inherit;
+}
+
+.category-box{
+  height:120px;
+  background:#ffc107;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.2rem;
+  font-weight:500;
+  border-radius:8px;
+  transition:all .2s ease;
+}
+
+.category-box:hover{
+  background:#ffca2c;
+  transform:translateY(-3px);
+  box-shadow:0 6px 15px rgba(0,0,0,.1);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.scran-footer{
+  background:#111;
+}
+
+.footer-link{
+  color:#ccc;
+  text-decoration:none;
+}
+
+.footer-link:hover{
+  color:#ffc107;
+}
+
+
+/* =========================
+   RECIPE PAGE
+========================= */
+
+.recipe-container img{
+  max-height:400px;
+  object-fit:cover;
+}
+
+
+/* =========================
+   NAVBAR FIXED
+========================= */
+
+.scran-nav{
     background: var(--dark-grey);
-     padding-top: 18px;
-    padding-bottom: 18px; 
+    padding: 12px 0;
 }
 
-.scran-logo {
-    font-size: 50px;
-    font-weight: 600;
-    letter-spacing: 0.5px; 
-    line-height: 1;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    white-space: nowrap;
-    font-family: 'Fredoka', sans-serif;
+/* Container alignment */
+.scran-nav .container-fluid{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.scran-links .nav-link {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 22px;
+/* Logo */
+.scran-logo{
+    font-size:50px; /* reduced from 50 */
+    font-weight:600;
+    font-family:'Fredoka',sans-serif;
+    color:white;
 }
 
-.scran-links .nav-link {
-    color: white;
-    font-weight: 500;
+/* Nav links */
+.navbar-nav .nav-link{
+    color:#fff;
+    font-weight:500;
+    margin-left:15px;
+    transition:0.2s;
+    font-size: 20px;
 }
 
-.scran-links .nav-link.active {
-  color: #ffffff;                     
-  text-decoration-line: underline;
-  text-decoration-color: var(--mustard);    
-  text-underline-offset: 6px;
-  text-decoration-thickness: 2px;
+.navbar-nav .nav-link:hover{
+    color:var(--mustard);
 }
 
-.scran-links .nav-link:hover {
-    color: var(--mustard);
+/* Dropdown */
+.dropdown-menu{
+    border-radius:8px;
+    border:none;
 }
 
-  
- /* dropdown styling */
-.scran-dropdown {
-  background-color: var(--dark-grey) !important;
-  border-radius: 6px;
-  padding: 8px 0;
+.dropdown-item:hover{
+    background:#f8f9fa;
+    color:#000;
 }
 
-.scran-dropdown .dropdown-item {
-  color: #ffffff !important;
-  font-family: 'Fredoka', sans-serif;
-  padding: 8px 18px;
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+.scran-hero-main-title{
+  font-size:32px;
 }
 
-.scran-dropdown .dropdown-item:hover,
-.scran-dropdown .dropdown-item:focus {
-  color: var(--mustard) !important;
-  background-color: transparent !important;
-}
-
-/* override Bootstrap default dropdown background */
-.dropdown-menu {
-  background-color: var(--dark-grey) !important;
-}
-
-
-/* Footer styling */
-.scran-footer {
-  background: #111;
-}
-
-.footer-link {
-  color: #ccc;
-  text-decoration: none;
-  display: block;
-  margin-bottom: 6px;
-  transition: 0.2s;
-}
-
-.footer-link:hover {
-  color: #ffc107;
-}
-
-.social-link {
-  color: #ccc;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-.social-link:hover {
-  color: #ffc107;
-}
-
-.scran-footer h5 {
-  margin-bottom: 15px;
-}
-
-
-/* Mobile */
-@media (max-width: 768px) {
-  .scran-hero {
-    min-height: 400px;
-  }
-
-  .scran-hero-title {
-    font-size: 32px;
-  }
-
-  .scran-hero-subtitle {
-    font-size: 16px;
-  }
-}
-
-
-
-@media (max-width: 991.98px) {
-    .scran-user-btns {
-        margin-top: 0.75rem;
-        width: 100%;
-    }
-    .scran-user-btns .btn {
-        flex: 1;
-    }
-    .scran-links .nav-link {
-        padding: 0.6rem 0.25rem;
-    }
-}
-
-/* Desktop: dropdown on hover */
-@media (min-width: 992px) {
-  .navbar .dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0;
-  }
 }

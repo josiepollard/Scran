@@ -17,7 +17,7 @@
 
 <!-- NAVBAR -->
 <!-- This loads the navigation bar from another file so it can be reused across pages -->
-<?php include 'includes/navbar.html'; ?>
+<?php include 'includes/navbar.php'; ?>
 
 
 <!-- HERO BANNER -->

@@ -17,7 +17,7 @@
 <body class="page-breakfast">
 
 <!-- NAVBAR -->
-<?php include 'includes/navbar.html'; ?>
+<?php include 'includes/navbar.php'; ?>
 
 
 <!-- HERO -->
@@ -70,6 +70,7 @@ return `
          class="btn btn-warning mt-auto">
          View Recipe
       </a>
+      
 
     </div>
 
@@ -110,6 +111,8 @@ container.innerHTML = `<p class="text-danger text-center">Failed to load recipes
 
 
 document.addEventListener("DOMContentLoaded", loadBreakfastRecipes);
+
+
 
 </script>
 

@@ -55,6 +55,11 @@
   font-weight:600;
 }
 
+.scran-hero-main-subtitle {
+  font-size:22px;
+  font-weight:500;
+}
+
 
 /* =========================
    PAGE BANNER IMAGES
@@ -153,17 +158,57 @@
    FOOTER
 ========================= */
 
+
 .scran-footer{
   background:#111;
+  color:#fff;
+  font-family:'Fredoka',sans-serif;
 }
 
+/* spacing */
+.scran-footer .container{
+  padding-top:50px;
+  padding-bottom:30px;
+}
+
+/* headings */
+.scran-footer h4,
+.scran-footer h5{
+  font-weight:600;
+  margin-bottom:15px;
+}
+
+/* links */
 .footer-link{
   color:#ccc;
   text-decoration:none;
+  display:block;
+  margin-bottom:8px;
+  transition:0.2s;
 }
 
 .footer-link:hover{
-  color:#ffc107;
+  color:var(--mustard);
+}
+
+/* social links */
+.social-link{
+  color:#ccc;
+  text-decoration:none;
+  transition:0.2s;
+}
+
+.social-link:hover{
+  color:var(--mustard);
+}
+
+/* bottom section */
+.scran-footer .border-top{
+  border-color:#333 !important;
+}
+
+.scran-footer small{
+  color:#aaa;
 }
 
 

@@ -1,33 +1,40 @@
-<!-- We will reuse throughout the website-->
+<?php session_start(); ?>
+
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark scran-nav sticky-top">
   <div class="container-fluid px-3 px-lg-4">
 
+    <!-- LOGO -->
     <a class="navbar-brand" href="index.php">
       <span class="scran-logo">SCRAN.</span>
     </a>
 
-    <!-- Mobile toggle -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#scranNavbar" aria-controls="scranNavbar" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- MOBILE TOGGLE -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#scranNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Collapsible content -->
+    <!-- NAV CONTENT -->
     <div class="collapse navbar-collapse" id="scranNavbar">
+
+      <!-- CENTER LINKS -->
       <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0 gap-lg-2 scran-links">
+
         <li class="nav-item">
-          <a class="nav-link"  href="index.php">Home</a> 
+          <a class="nav-link" href="index.php">Home</a>
+        </li>
 
-       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" 
-            href="#" 
-            id="recipesDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
+        <!-- DROPDOWN -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             id="recipesDropdown"
+             role="button"
+             data-bs-toggle="dropdown">
             Recipes
-        </a>
+          </a>
 
-        <ul class="dropdown-menu scran-dropdown">
+          <ul class="dropdown-menu scran-dropdown">
             <li><a class="dropdown-item" href="recipes.php">All Recipes</a></li>
             <li><a class="dropdown-item" href="breakfast.php">Breakfast</a></li>
             <li><a class="dropdown-item" href="desserts.php">Desserts</a></li>
@@ -35,26 +42,45 @@
             <li><a class="dropdown-item" href="Side.php">Side Dishes</a></li>
             <li><a class="dropdown-item" href="Vegetarian.php">Vegetarian</a></li>
             <li><a class="dropdown-item" href="Vegan.php">Vegan</a></li>
-            
-           
-        </ul>
+          </ul>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="whatsInYourCupboard.php">Whats in your cupboard?</a>
+          <a class="nav-link" href="whatsInYourCupboard.php">What's in your cupboard?</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="scrandom.php">Scrandom!</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="savedRecipes.php">Saved recipes</a>
         </li>
+
       </ul>
 
+      <!-- RIGHT SIDE (LOGIN / USER) -->
       <div class="d-flex gap-2 align-items-center ms-lg-3 scran-user-btns">
-        <a class="btn btn-light scran-btn" href="#">Login</a>
-        <a class="btn btn-outline-light scran-btn" href="#">Sign up</a>
+
+        <?php if(isset($_SESSION["user"])): ?>
+
+          <!-- LOGGED IN -->
+          <span class="nav-link text-white">Hi, <?php echo $_SESSION["user"]; ?></span>
+
+          <a href="logout.php" class="btn btn-outline-light scran-btn">
+            Logout
+          </a>
+
+        <?php else: ?>
+
+          <!-- NOT LOGGED IN -->
+          <a class="btn btn-light scran-btn" href="login.php">Login</a>
+          <a class="btn btn-outline-light scran-btn" href="signup.php">Sign Up</a>
+
+        <?php endif; ?>
+
       </div>
+
     </div>
   </div>
 </nav>

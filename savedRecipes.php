@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["user"])) {
+  header("Location: login.php");
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +26,7 @@
 
 <!-- NAVBAR START -->
 <!-- uses includes/navbar.php which we will reuse throughout the website-->
-<?php include 'includes/navbar.html'; ?>
+<?php include 'includes/navbar.php'; ?>
 <!-- NAVBAR END -->
 
 

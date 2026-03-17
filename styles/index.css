@@ -68,7 +68,36 @@
 }
 
 
+/* Footer styling */
+.scran-footer {
+  background: #111;
+}
 
+.footer-link {
+  color: #ccc;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 6px;
+  transition: 0.2s;
+}
+
+.footer-link:hover {
+  color: #ffc107;
+}
+
+.social-link {
+  color: #ccc;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.social-link:hover {
+  color: #ffc107;
+}
+
+.scran-footer h5 {
+  margin-bottom: 15px;
+}
 
 
 /* Mobile */

@@ -5,7 +5,7 @@
   position: relative;
   width: 100%;
   min-height: 300px;
-  background-image: url('../images/main-banner.png'); 
+  background-image: url('../images/index-banner.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -40,3 +40,30 @@
   opacity: 0.95;
 }
 
+
+
+/* Category cards */
+.category-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.category-box {
+  height: 120px;
+  background: #ffc107;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+/* Hover effect */
+.category-box:hover {
+  background: #ffca2c;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}

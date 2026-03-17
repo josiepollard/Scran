@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles/index.css">
-    <link rel="stylesheet" type="text/css" href="styles/home.css">
+   
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+     <link rel="stylesheet" type="text/css" href="styles/index.css">
+    <link rel="stylesheet" type="text/css" href="styles/home.css">
     <title>Scran</title>
     <link rel="icon" type="image/x-icon" href="/images/favi.png">
 
@@ -67,9 +72,67 @@
 
 
 
+<!-- CATEGORIES SECTION START -->
+<section class="container my-5">
+
+  <h2 class="mb-4 text-center">Browse by Category</h2>
+
+  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 g-4">
+
+  
+
+    <!-- Breakfast -->
+    <div class="col">
+      <a href="breakfast.php" class="category-card">
+        <div class="category-box">Breakfast</div>
+      </a>
+    </div>
+
+    <!-- Desserts -->
+    <div class="col">
+      <a href="desserts.php" class="category-card">
+        <div class="category-box">Desserts</div>
+      </a>
+    </div>
+
+    <!-- Starters -->
+    <div class="col">
+      <a href="Starter.php" class="category-card">
+        <div class="category-box">Starters</div>
+      </a>
+    </div>
+
+    <!-- Side -->
+    <div class="col">
+      <a href="Side.php" class="category-card">
+        <div class="category-box">Side Dishes</div>
+      </a>
+    </div>
+
+    <!-- Vegetarian -->
+    <div class="col">
+      <a href="Vegetarian.php" class="category-card">
+        <div class="category-box">Vegetarian</div>
+      </a>
+    </div>
+
+    <!-- Vegan -->
+    <div class="col">
+      <a href="Vegan.php" class="category-card">
+        <div class="category-box">Vegan</div>
+      </a>
+    </div>
+
+  </div>
+
+</section>
+<!-- CATEGORIES SECTION END -->
+
+
+
 
 <!-- scrandom  -->
-<!-- links to category pages  -->
+
 
 
 

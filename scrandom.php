@@ -156,7 +156,7 @@ document.getElementById("recipeA").innerHTML = `
 <h5 class="card-title">${a.strMeal}</h5>
 
 <!-- Button that selects recipe A -->
-<button class="btn btn-primary" onclick="choose('A')">
+<button class="btn btn-warning" onclick="choose('A')">
 Choose
 </button>
 
@@ -175,7 +175,7 @@ document.getElementById("recipeB").innerHTML = `
 <h5 class="card-title">${b.strMeal}</h5>
 
 <!-- Button that selects recipe B -->
-<button class="btn btn-primary" onclick="choose('B')">
+<button class="btn btn-warning" onclick="choose('B')">
 Choose
 </button>
 
@@ -230,7 +230,7 @@ document.getElementById("gameArea").innerHTML = `
 <br>
 
 <!-- Button reloads the page to start again -->
-<button class="btn btn-success" onclick="location.reload()">
+<button class="btn btn-warning" onclick="location.reload()">
 Play Again
 </button>
 

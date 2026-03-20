@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +27,8 @@
 </section>
 
 
+
+
 <!-- FOOTER -->
 <?php include 'includes/footer.html'; ?>
 
@@ -36,85 +40,160 @@ const params = new URLSearchParams(window.location.search);
 const mealId = params.get("id");
 
 
+// =========================
+// INGREDIENTS
+// =========================
 function getIngredients(meal){
 
-let ingredients = [];
+  let ingredients = [];
 
-for(let i = 1; i <= 20; i++){
-  const ingredient = meal[`strIngredient${i}`];
-  const measure = meal[`strMeasure${i}`];
+  for(let i = 1; i <= 20; i++){
+    const ingredient = meal[`strIngredient${i}`];
+    const measure = meal[`strMeasure${i}`];
 
-  if(ingredient && ingredient.trim() !== ""){
-    ingredients.push(`${measure} ${ingredient}`);
+    if(ingredient && ingredient.trim() !== ""){
+      ingredients.push(`${measure} ${ingredient}`);
+    }
   }
+
+  return ingredients;
 }
 
-return ingredients;
+
+// =========================
+// STEPS (NEW)
+// =========================
+function getSteps(instructions){
+
+  return instructions
+    .split(/\r\n|\n|\. /) // split by line or sentence
+    .map(step => step.trim())
+    .filter(step => step.length > 0);
 }
 
 
+
+function getYouTubeEmbed(url) {
+  if (!url) return null;
+
+  const videoId = url.split("v=")[1];
+  if (!videoId) return null;
+
+  return `https://www.youtube.com/embed/${videoId}`;
+}
+
+function getSaveButton(mealId) {
+
+  <?php if (isset($_SESSION['user_id'])): ?>
+    return `
+      <form method="POST" action="saveRecipe.php">
+        <input type="hidden" name="recipe_id" value="${mealId}">
+        <button type="submit" class="btn btn-primary">
+          Save Recipe
+        </button>
+      </form>
+    `;
+  <?php else: ?>
+    return `
+      <a href="login.php" class="btn btn-outline-secondary">
+        Log in to save
+      </a>
+    `;
+  <?php endif; ?>
+
+}
+
+// =========================
+// LOAD RECIPE
+// =========================
 async function loadRecipe(){
 
-const container = document.getElementById("recipe-container");
+  const container = document.getElementById("recipe-container");
 
-if(!mealId){
-  container.innerHTML = "<p class='text-center'>No recipe found.</p>";
-  return;
-}
+  if(!mealId){
+    container.innerHTML = "<p class='text-center'>No recipe found.</p>";
+    return;
+  }
 
-try{
+  try{
 
-const res = await fetch(
-  `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
-);
+    const res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
+    );
 
-const data = await res.json();
-const meal = data.meals[0];
+    const data = await res.json();
+    const meal = data.meals[0];
+    const videoUrl = getYouTubeEmbed(meal.strYoutube);
 
-const ingredientsList = getIngredients(meal)
-  .map(item => `<li>${item}</li>`)
-  .join("");
+    // Ingredients
+    const ingredientsList = getIngredients(meal)
+      .map(item => `<li>${item}</li>`)
+      .join("");
 
-container.innerHTML = `
-  <div class="row">
+    // Steps
+    const stepsList = getSteps(meal.strInstructions)
+      .map(step => `<li class="mb-2">${step}</li>`)
+      .join("");
 
-    <!-- IMAGE -->
-    <div class="col-md-6">
-      <img src="${meal.strMealThumb}" class="img-fluid rounded mb-4">
-    </div>
+    container.innerHTML = `
+      <div class="row">
 
-    <!-- DETAILS -->
-    <div class="col-md-6">
+        <!-- IMAGE -->
+        <div class="col-md-6">
+          <img src="${meal.strMealThumb}" class="img-fluid rounded mb-4">
+        </div>
 
-      <h1>${meal.strMeal}</h1>
+        <!-- DETAILS -->
+        <div class="col-md-6">
 
-      <p class="text-muted">
-        ${meal.strCategory} | ${meal.strArea}
-      </p>
+          <h1>${meal.strMeal}</h1>
 
-      <h4 class="mt-4">Ingredients</h4>
-      <ul>${ingredientsList}</ul>
+          <p class="text-muted">
+            ${meal.strCategory} | ${meal.strArea}
+          </p>
 
-    </div>
+          <div class="mt-3">
+  ${getSaveButton(meal.idMeal)}
+</div>
 
+          <h4 class="mt-4">Ingredients</h4>
+          <ul>${ingredientsList}</ul>
+
+        </div>
+
+      </div>
+
+      <!-- INSTRUCTIONS -->
+<div class="mt-5">
+  <h3>Instructions</h3>
+  <ol class="mt-3">
+    ${stepsList}
+  </ol>
+</div>
+
+<!-- VIDEO -->
+${videoUrl ? `
+<div class="mt-5">
+  <h3>Video Tutorial</h3>
+
+  <div class="ratio ratio-16x9 mt-3">
+    <iframe src="${videoUrl}" 
+            title="YouTube video"
+            allowfullscreen>
+    </iframe>
   </div>
+</div>
+` : ""}
+    `;
 
-  <!-- INSTRUCTIONS -->
-  <div class="mt-5">
-    <h3>Instructions</h3>
-    <p>${meal.strInstructions}</p>
-  </div>
-`;
+  } catch(error){
 
-}catch(error){
+    console.error(error);
+    container.innerHTML = "<p class='text-danger text-center'>Failed to load recipe.</p>";
 
-console.error(error);
-container.innerHTML = "<p class='text-danger text-center'>Failed to load recipe.</p>";
+  }
 
 }
-
-}
-
 
 document.addEventListener("DOMContentLoaded", loadRecipe);
 

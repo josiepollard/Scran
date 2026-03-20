@@ -1,4 +1,12 @@
-<?php session_start(); ?>
+
+
+<?php
+// ❌ REMOVE session_start() from here
+
+if (!isset($_SESSION)) {
+    // optional safety fallback, but usually not needed
+}
+?>
 
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark scran-nav sticky-top">
@@ -62,22 +70,13 @@
       <!-- RIGHT SIDE (LOGIN / USER) -->
       <div class="d-flex gap-2 align-items-center ms-lg-3 scran-user-btns">
 
-        <?php if(isset($_SESSION["user"])): ?>
-
-          <!-- LOGGED IN -->
-          <span class="nav-link text-white">Hi, <?php echo $_SESSION["user"]; ?></span>
-
-          <a href="logout.php" class="btn btn-outline-light scran-btn">
-            Logout
-          </a>
-
-        <?php else: ?>
-
-          <!-- NOT LOGGED IN -->
-          <a class="btn btn-light scran-btn" href="login.php">Login</a>
-          <a class="btn btn-outline-light scran-btn" href="signup.php">Sign Up</a>
-
-        <?php endif; ?>
+        <?php if (isset($_SESSION["user_name"])): ?>
+  <span class="nav-link text-white">Hi, <?php echo htmlspecialchars($_SESSION["user_name"]); ?></span>
+  <a href="logout.php" class="btn btn-outline-light scran-btn">Logout</a>
+<?php else: ?>
+  <a class="btn btn-light scran-btn" href="login.php">Login</a>
+  <a class="btn btn-outline-light scran-btn" href="signup.php">Sign Up</a>
+<?php endif; ?>
 
       </div>
 

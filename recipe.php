@@ -1,4 +1,6 @@
-
+<?php
+include "config.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,12 +85,11 @@ function getYouTubeEmbed(url) {
 }
 
 function getSaveButton(mealId) {
-
   <?php if (isset($_SESSION['user_id'])): ?>
     return `
       <form method="POST" action="saveRecipe.php">
         <input type="hidden" name="recipe_id" value="${mealId}">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-warning">
           Save Recipe
         </button>
       </form>
@@ -100,7 +101,6 @@ function getSaveButton(mealId) {
       </a>
     `;
   <?php endif; ?>
-
 }
 
 // =========================

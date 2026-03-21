@@ -8,20 +8,6 @@
 }
 
 
-/* =========================
-   NAVBAR
-========================= */
-
-.scran-nav{
-    background:var(--dark-grey);
-    padding:18px 0;
-}
-
-.scran-logo{
-    font-size:50px;
-    font-weight:600;
-    font-family:'Fredoka',sans-serif;
-}
 
 
 /* =========================
@@ -227,7 +213,7 @@
 ========================= */
 
 .scran-nav{
-    background: var(--dark-grey);
+    background: black;
     padding: 12px 0;
 }
 
@@ -293,9 +279,7 @@
   color: #fff;
 }
 
-.dark-mode .navbar {
-  background-color: #000 !important;
-}
+
 
 .dark-mode .btn-warning {
   background-color: #444;

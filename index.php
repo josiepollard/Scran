@@ -62,25 +62,21 @@ if (isset($_SESSION["user_id"])) {
     <h2 class="mb-0">Discover Something Tasty</h2>
 
     <div class="d-flex gap-2">
-      <button class="btn btn-outline-secondary btn-sm" type="button"
-              data-bs-target="#recipesCarousel" data-bs-slide="prev">
-        ‹
-      </button>
-      <button class="btn btn-outline-secondary btn-sm" type="button"
-              data-bs-target="#recipesCarousel" data-bs-slide="next">
-        ›
-      </button>
-    </div>
+  <button class="btn btn-outline-secondary btn-sm" type="button" onclick="scrollRecipes(-1)">
+    ‹
+  </button>
+  <button class="btn btn-outline-secondary btn-sm" type="button" onclick="scrollRecipes(1)">
+    ›
+  </button>
+</div>
   </div>
 
-  <div id="recipesCarousel" class="carousel slide"
-     data-bs-ride="carousel"
-     data-bs-interval="6000"
-     data-bs-pause="hover">
-    <div class="carousel-inner" id="recipes-carousel-inner">
-      <!-- Slides injected here -->
-    </div>
+  <div class="position-relative">
+  <div id="recipes-row" class="recipes-scroll-row">
+    <!-- Cards injected here -->
   </div>
+</div>
+
 </section>
 <!-- RANDOM RECIPES SECTION END -->
 
@@ -167,7 +163,7 @@ function createRecipeCard(meal) {
 const isSaved = savedMealIds.includes(meal.idMeal);
 
 return `
-  <div class="col">
+  <div class="recipe-scroll-item">
     <div class="card h-100 shadow-sm">
 
       <img src="${meal.strMealThumb}" 
@@ -207,22 +203,13 @@ return `
 `;
 }
 
-// Break recipes into slides of 4
-function chunkArray(arr, size) {
-  const chunks = [];
-  for (let i = 0; i < arr.length; i += size) {
-    chunks.push(arr.slice(i, i + size));
-  }
-  return chunks;
-}
 
 async function getRandomRecipesCarousel() {
-  const inner = document.getElementById("recipes-carousel-inner");
-  inner.innerHTML = `<div class="text-center py-5">Loading recipes...</div>`;
+  const row = document.getElementById("recipes-row");
+  row.innerHTML = `<div class="text-center py-5 w-100">Loading recipes...</div>`;
 
   try {
-    const count = 16;   // total recipes
-    const perSlide = 4; // show 4 per slide
+    const count = 16;
 
     const requests = Array.from({ length: count }, () =>
       fetch("https://www.themealdb.com/api/json/v1/1/random.php")
@@ -231,31 +218,68 @@ async function getRandomRecipesCarousel() {
 
     const results = await Promise.all(requests);
 
-    const meals = results
-      .map(r => r?.meals?.[0] ?? null)
-      .filter(Boolean);
+const seen = new Set();
 
-    const slides = chunkArray(meals, perSlide);
+const meals = results
+  .map(r => r?.meals?.[0] ?? null)
+  .filter(meal => {
+    if (!meal) return false;
+    if (seen.has(meal.idMeal)) return false;
+    seen.add(meal.idMeal);
+    return true;
+  });
 
-    inner.innerHTML = slides.map((slideMeals, index) => `
-      <div class="carousel-item ${index === 0 ? "active" : ""}">
-        <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-4">
-          ${slideMeals.map(createRecipeCard).join("")}
-        </div>
-      </div>
-    `).join("");
+
+
+
+
+    // duplicate list for looping
+const extendedMeals = [...meals, ...meals];
+
+row.innerHTML = extendedMeals.map(createRecipeCard).join("");
 
   } catch (error) {
     console.error(error);
-    inner.innerHTML = `
-      <div class="text-center py-5 text-danger">
+    row.innerHTML = `
+      <div class="text-center py-5 text-danger w-100">
         Failed to load recipes.
       </div>
     `;
   }
 }
 
-document.addEventListener("DOMContentLoaded", getRandomRecipesCarousel);
+function scrollRecipes(direction) {
+  const row = document.getElementById("recipes-row");
+  const firstCard = row.querySelector(".recipe-scroll-item");
+
+  if (!firstCard) return;
+
+  const cardWidth = firstCard.offsetWidth;
+  const gap = 24;
+  const scrollAmount = cardWidth + gap;
+
+  row.scrollBy({
+    left: direction * scrollAmount,
+    behavior: "smooth"
+  });
+
+  // 🔁 LOOP RESET
+  const maxScroll = row.scrollWidth / 2;
+
+  if (row.scrollLeft >= maxScroll) {
+    setTimeout(() => {
+      row.scrollLeft = 0;
+    }, 400);
+  }
+
+  if (row.scrollLeft <= 0 && direction === -1) {
+    setTimeout(() => {
+      row.scrollLeft = maxScroll;
+    }, 400);
+  }
+}
+
+
 
 async function toggleSave(mealId, button){
 
@@ -310,6 +334,20 @@ button.disabled = false;
 
 }
 }
+
+let autoScrollInterval;
+
+function startAutoScroll(){
+  autoScrollInterval = setInterval(() => {
+    scrollRecipes(1);
+  }, 6000); // 6 seconds
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  getRandomRecipesCarousel();
+  startAutoScroll();
+});
 </script>
 
 </body>

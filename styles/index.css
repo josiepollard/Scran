@@ -271,6 +271,35 @@
 }
 
 
+.recipes-scroll-row {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+
+.recipes-scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+.recipe-scroll-item {
+  flex: 0 0 calc((100% - 4.5rem) / 4);
+}
+
+@media (max-width: 991.98px) {
+  .recipe-scroll-item {
+    flex: 0 0 calc((100% - 1.5rem) / 2);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .recipe-scroll-item {
+    flex: 0 0 calc((100% - 1.5rem) / 2);
+  }
+}
+
 
 /* =========================
    MOBILE

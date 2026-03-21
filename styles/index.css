@@ -270,6 +270,19 @@
     color:#000;
 }
 
+
+.scrandom-section {
+  background: #f4f4f4;
+  color: #222;
+  transition: background 0.4s ease, transform 0.3s ease;
+}
+.scrandom-section:hover {
+  background: linear-gradient(135deg, #bf70e1, #f482c8, #f5d968);
+  
+}
+
+
+/* dark mode */
 .dark-mode {
   background-color: #121212;
   color: #f1f1f1;
@@ -287,7 +300,31 @@
 .dark-mode .btn-warning {
   background-color: #444;
   border-color: #444;
+  color: #fff ;
 }
+.dark-mode .scrandom-section {
+  background: #444;
+  color: #fff;
+}
+.dark-mode .scrandom-section:hover{
+background: linear-gradient(135deg, #4d066c, #810551, #885d02);
+}
+.dark-mode .category-box {
+   background: #444;
+}
+
+.dark-mode .btn-dark{
+  background: #444;
+}
+
+
+
+
+
+
+
+
+
 .recipes-scroll-row {
   display: flex;
   gap: 1.5rem;
@@ -317,15 +354,7 @@
   }
 }
 
-.scrandom-section {
-  background: #f4f4f4;
-  color: #222;
-  transition: background 0.4s ease, transform 0.3s ease;
-}
-.scrandom-section:hover {
-  background: linear-gradient(135deg, #bf70e1, #f482c8, #f5d968);
-  transform: scale(1.0);
-}
+
 
 /* =========================
    MOBILE

@@ -49,7 +49,7 @@ if (isset($_SESSION["user_id"])) {
 
 
 <!-- FOOTER -->
-<?php include 'includes/footer.html'; ?>
+<?php include 'includes/footer.php'; ?>
 
 <script id="gkt5y9">
 const savedMealIds = <?php echo json_encode($savedMealIds); ?>;

@@ -31,6 +31,12 @@
         </div>
       </div>
 
+      <div class="text-center mt-3">
+  <button id="themeToggle" class="btn btn-outline-secondary btn-sm">
+    Dark Mode
+  </button>
+</div>
+
     </div>
 
     <!-- BOTTOM -->
@@ -42,3 +48,34 @@
 
 </footer>
 <!-- FOOTER END -->
+
+<script>
+(function(){
+
+  const button = document.getElementById("themeToggle");
+
+  // Apply saved theme on load
+  const savedTheme = localStorage.getItem("theme");
+
+  if(savedTheme === "dark"){
+    document.body.classList.add("dark-mode");
+    if(button) button.textContent = "Light Mode";
+  }
+
+  // Toggle click
+  if(button){
+    button.addEventListener("click", () => {
+
+      document.body.classList.toggle("dark-mode");
+
+      const isDark = document.body.classList.contains("dark-mode");
+
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+
+      button.textContent = isDark ? "Light Mode" : "Dark Mode";
+
+    });
+  }
+
+})();
+</script>

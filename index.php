@@ -167,7 +167,7 @@ if (isset($_SESSION["user_id"])) {
 
 
 <!-- FOOTER START -->
-<?php include 'includes/footer.html'; ?>
+<?php include 'includes/footer.php'; ?>
 <!-- FOOTER END -->
 
 

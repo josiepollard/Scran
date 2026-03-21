@@ -50,7 +50,7 @@ $stmt->close();
   </div>
 </section>
 
-<?php include 'includes/footer.html'; ?>
+<?php include 'includes/footer.php'; ?>
 
 <script>
 const savedMealIds = <?php echo json_encode($savedMealIds); ?>;

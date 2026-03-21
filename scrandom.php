@@ -60,7 +60,7 @@
 
 <!-- FOOTER -->
 <!-- Loads footer from reusable file -->
-<?php include 'includes/footer.html'; ?>
+<?php include 'includes/footer.php'; ?>
 
 
 

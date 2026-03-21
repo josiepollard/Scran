@@ -2,6 +2,23 @@
 include "config.php";
 ?>
 
+<?php
+$savedMealIds = [];
+
+if (isset($_SESSION["user_id"])) {
+    $stmt = $conn->prepare("SELECT meal_id FROM saved_recipes WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION["user_id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        $savedMealIds[] = $row["meal_id"];
+    }
+
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +51,9 @@ include "config.php";
 <!-- FOOTER -->
 <?php include 'includes/footer.html'; ?>
 
+<script id="gkt5y9">
+const savedMealIds = <?php echo json_encode($savedMealIds); ?>;
+</script>
 
 <script>
 
@@ -86,14 +106,17 @@ function getYouTubeEmbed(url) {
 
 function getSaveButton(mealId) {
   <?php if (isset($_SESSION['user_id'])): ?>
+
+    const isSaved = savedMealIds.includes(mealId);
+
     return `
-      <form method="POST" action="saveRecipe.php">
-        <input type="hidden" name="recipe_id" value="${mealId}">
-        <button type="submit" class="btn btn-warning">
-          Save Recipe
-        </button>
-      </form>
+      <button 
+        class="btn ${isSaved ? 'btn-dark' : 'btn-warning'}"
+        onclick="toggleSave('${mealId}', this)">
+        ${isSaved ? 'Saved' : 'Save Recipe'}
+      </button>
     `;
+
   <?php else: ?>
     return `
       <a href="login.php" class="btn btn-outline-secondary">
@@ -197,6 +220,67 @@ ${videoUrl ? `
 
 document.addEventListener("DOMContentLoaded", loadRecipe);
 
+async function saveRecipe(mealId, button) {
+  try {
+    const response = await fetch("saveRecipe.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: "recipe_id=" + encodeURIComponent(mealId)
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      // ✅ Change button instantly
+      button.textContent = "Saved ✓";
+      button.classList.remove("btn-warning");
+      button.classList.add("btn-success");
+      button.disabled = true;
+    } else {
+      alert(data.message || "Failed to save recipe");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  }
+}
+async function toggleSave(mealId, button) {
+  try {
+    const response = await fetch("toggleSave.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: "recipe_id=" + encodeURIComponent(mealId)
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      alert(data.message || "Error");
+      return;
+    }
+
+    if (data.saved) {
+      // ✅ NOW SAVED
+      button.textContent = "Saved";
+      button.classList.remove("btn-warning");
+      button.classList.add("btn-dark");
+    } else {
+      // ❌ NOW REMOVED
+      button.textContent = "Save Recipe";
+      button.classList.remove("btn-dark");
+      button.classList.add("btn-warning");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong");
+  }
+}
 </script>
 
 </body>

@@ -82,6 +82,28 @@ if (isset($_SESSION["user_id"])) {
 
 
 
+
+<!-- SCRANDOM SECTION START -->
+<section class="scrandom-section text-center py-5">
+
+  <div class="container">
+
+    <h2 class="mb-3">Not sure what to cook?</h2>
+
+    <p class="mb-4">
+      Let SCRAN help you pick a recipe
+    </p>
+
+    <a href="scrandom.php" class="btn btn-dark btn-lg">
+      Scrandom 
+    </a>
+
+  </div>
+
+</section>
+<!-- SCRANDOM SECTION END -->
+
+
 <!-- CATEGORIES SECTION START -->
 <section class="container my-5">
 
@@ -137,6 +159,7 @@ if (isset($_SESSION["user_id"])) {
 
 </section>
 <!-- CATEGORIES SECTION END -->
+
 
 
 

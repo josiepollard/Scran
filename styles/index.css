@@ -300,6 +300,15 @@
   }
 }
 
+.scrandom-section {
+  background: #f4f4f4;
+  color: #222;
+  transition: background 0.4s ease, transform 0.3s ease;
+}
+.scrandom-section:hover {
+  background: linear-gradient(135deg, #bf70e1, #f482c8, #f5d968);
+  transform: scale(1.0);
+}
 
 /* =========================
    MOBILE

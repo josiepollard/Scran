@@ -87,8 +87,24 @@ function getIngredients(meal){
 // =========================
 function getSteps(instructions){
 
-  return instructions
-    .split(/\r\n|\n|\. /) // split by line or sentence
+  const text = instructions.replace(/\r/g, "");
+
+  if(/step\s*\d+/i.test(text)){
+    return text
+      .split(/step\s*\d+/i)
+      .map(step => step.replace(/step\s*\d+/i, "").trim())
+      .filter(step => step.length > 0);
+  }
+
+  if(/\n?\d+[\.\)]\s/.test(text)){
+    return text
+      .split(/\n?\d+[\.\)]\s/)
+      .map(step => step.trim())
+      .filter(step => step.length > 0);
+  }
+
+  return text
+    .split(/\r\n|\n|\. /)
     .map(step => step.trim())
     .filter(step => step.length > 0);
 }
@@ -233,10 +249,10 @@ async function saveRecipe(mealId, button) {
     const data = await response.json();
 
     if (data.success) {
-      // ✅ Change button instantly
-      button.textContent = "Saved ✓";
+
+      button.textContent = "Saved";
       button.classList.remove("btn-warning");
-      button.classList.add("btn-success");
+      button.classList.add("btn-dark");
       button.disabled = true;
     } else {
       alert(data.message || "Failed to save recipe");

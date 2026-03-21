@@ -1,10 +1,8 @@
 
 
 <?php
-// ❌ REMOVE session_start() from here
-
-if (!isset($_SESSION)) {
-    // optional safety fallback, but usually not needed
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 ?>
 
@@ -70,12 +68,22 @@ if (!isset($_SESSION)) {
       <!-- RIGHT SIDE (LOGIN / USER) -->
       <div class="d-flex gap-2 align-items-center ms-lg-3 scran-user-btns">
 
-        <?php if (isset($_SESSION["user_name"])): ?>
-  <span class="nav-link text-white">Hi, <?php echo htmlspecialchars($_SESSION["user_name"]); ?></span>
-  <a href="logout.php" class="btn btn-outline-light scran-btn">Logout</a>
+       <?php if (isset($_SESSION["user_name"])): ?>
+
+  <span class="nav-link text-white">
+    Hi, <?php echo htmlspecialchars($_SESSION["user_name"]); ?>
+  </span>
+
+
+  <a href="logout.php" class="btn btn-outline-light scran-btn">
+    Logout
+  </a>
+
 <?php else: ?>
+
   <a class="btn btn-light scran-btn" href="login.php">Login</a>
   <a class="btn btn-outline-light scran-btn" href="signup.php">Sign Up</a>
+
 <?php endif; ?>
 
       </div>

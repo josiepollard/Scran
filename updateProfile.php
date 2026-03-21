@@ -1,0 +1,21 @@
+<?php
+include "config.php";
+
+header('Content-Type: application/json');
+
+if (!isset($_SESSION["user_id"])) {
+    echo json_encode(["success"=>false]);
+    exit();
+}
+
+$name = trim($_POST["name"] ?? "");
+
+$stmt = $conn->prepare("UPDATE users SET name=? WHERE id=?");
+$stmt->bind_param("si", $name, $_SESSION["user_id"]);
+
+if($stmt->execute()){
+    $_SESSION["user_name"] = $name;
+    echo json_encode(["success"=>true]);
+} else {
+    echo json_encode(["success"=>false]);
+}

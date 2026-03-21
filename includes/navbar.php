@@ -70,14 +70,41 @@ if (session_status() === PHP_SESSION_NONE) {
 
        <?php if (isset($_SESSION["user_name"])): ?>
 
-  <span class="nav-link text-white">
+  <div class="dropdown">
+
+  <a class="nav-link dropdown-toggle text-white"
+     href="#"
+     role="button"
+     data-bs-toggle="dropdown"
+     aria-expanded="false">
+
     Hi, <?php echo htmlspecialchars($_SESSION["user_name"]); ?>
-  </span>
 
-
-  <a href="logout.php" class="btn btn-outline-light scran-btn">
-    Logout
   </a>
+
+  <ul class="dropdown-menu dropdown-menu-end">
+
+    <li>
+      <a class="dropdown-item" href="profile.php">
+        Profile Settings
+      </a>
+    </li>
+
+
+    <li><hr class="dropdown-divider"></li>
+
+    <li>
+      <a class="dropdown-item text-danger" href="logout.php">
+        Logout
+      </a>
+    </li>
+
+  </ul>
+
+</div>
+
+
+ 
 
 <?php else: ?>
 

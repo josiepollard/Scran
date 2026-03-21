@@ -1,3 +1,22 @@
+<?php
+include "config.php";
+
+$savedMealIds = [];
+
+if (isset($_SESSION["user_id"])) {
+    $stmt = $conn->prepare("SELECT meal_id FROM saved_recipes WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION["user_id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        $savedMealIds[] = $row["meal_id"];
+    }
+
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +61,10 @@
 <!-- FOOTER -->
 <?php include 'includes/footer.html'; ?>
 
+<script>
+const savedMealIds = <?php echo json_encode($savedMealIds); ?>;
+const isLoggedIn = <?php echo isset($_SESSION["user_id"]) ? 'true' : 'false'; ?>;
+</script>
 
 <script>
 
@@ -51,6 +74,8 @@ function truncateText(text, maxLength){
 
 
 function createRecipeCard(meal){
+
+const isSaved = savedMealIds.includes(meal.idMeal);
 
 return `
 <div class="col">
@@ -66,17 +91,32 @@ return `
         ${truncateText(meal.strMeal,25)}
       </h5>
 
-      <a href="recipe.php?id=${meal.idMeal}"
-         class="btn btn-warning mt-auto">
-         View Recipe
-      </a>
+      <div class="mt-auto d-grid gap-2">
+
+        <a href="recipe.php?id=${meal.idMeal}"
+           class="btn btn-warning">
+           View Recipe
+        </a>
+
+        ${
+          isLoggedIn
+          ? `<button 
+                class="btn ${isSaved ? 'btn-dark' : 'btn-outline-secondary'}"
+                onclick="toggleSave('${meal.idMeal}', this)">
+                ${isSaved ? 'Saved' : 'Save'}
+             </button>`
+          : `<a href="login.php" class="btn btn-outline-secondary">
+                Log in to save
+             </a>`
+        }
+
+      </div>
 
     </div>
 
   </div>
 </div>
 `;
-
 }
 
 
@@ -110,7 +150,59 @@ container.innerHTML = `<p class="text-danger text-center">Failed to load recipes
 
 
 document.addEventListener("DOMContentLoaded", loadBreakfastRecipes);
+async function toggleSave(mealId, button){
 
+try{
+
+button.disabled = true;
+
+const response = await fetch("toggleSave.php",{
+method:"POST",
+headers:{
+"Content-Type":"application/x-www-form-urlencoded"
+},
+body:"recipe_id=" + encodeURIComponent(mealId)
+});
+
+const data = await response.json();
+
+if(!data.success){
+alert(data.message || "Error");
+button.disabled = false;
+return;
+}
+
+if(data.saved){
+
+button.textContent = "Saved";
+button.classList.remove("btn-outline-secondary");
+button.classList.add("btn-dark");
+
+savedMealIds.push(mealId);
+
+}
+else{
+
+button.textContent = "Save";
+button.classList.remove("btn-dark");
+button.classList.add("btn-outline-secondary");
+
+const index = savedMealIds.indexOf(mealId);
+if(index > -1) savedMealIds.splice(index,1);
+
+}
+
+button.disabled = false;
+
+}
+catch(err){
+
+console.error(err);
+alert("Something went wrong");
+button.disabled = false;
+
+}
+}
 </script>
 
 

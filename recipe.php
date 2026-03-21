@@ -19,25 +19,7 @@ if (isset($_SESSION["user_id"])) {
 }
 ?>
 
-<?php
-$reviews = [];
 
-$stmt = $conn->prepare("
-  SELECT reviews.*, users.name 
-  FROM reviews 
-  JOIN users ON reviews.user_id = users.id
-  WHERE meal_id = ?
-  ORDER BY created_at DESC
-");
-
-$stmt->bind_param("s", $_GET["id"]);
-$stmt->execute();
-$result = $stmt->get_result();
-
-while($row = $result->fetch_assoc()){
-  $reviews[] = $row;
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -243,57 +225,7 @@ ${videoUrl ? `
   </div>
 </div>
 
-<div class="mt-5">
 
-  <h3>Reviews</h3>
-
-  <!-- ADD REVIEW (ONLY LOGGED IN) -->
-  <?php if(isset($_SESSION["user_id"])): ?>
-
-    <div class="card p-3 mb-4">
-      
-      <select id="rating" class="form-select mb-2">
-        <option value="5">⭐⭐⭐⭐⭐</option>
-        <option value="4">⭐⭐⭐⭐</option>
-        <option value="3">⭐⭐⭐</option>
-        <option value="2">⭐⭐</option>
-        <option value="1">⭐</option>
-      </select>
-
-      <textarea id="comment" class="form-control mb-2" placeholder="Write your review..."></textarea>
-
-      <button onclick="submitReview()" class="btn btn-dark">
-        Submit Review
-      </button>
-
-      <div id="reviewFeedback"></div>
-
-    </div>
-
-  <?php else: ?>
-
-    <p><a href="login.php">Log in</a> to leave a review</p>
-
-  <?php endif; ?>
-
-  <!-- REVIEW LIST -->
-  <?php foreach($reviews as $r): ?>
-
-    <div class="card p-3 mb-3">
-
-      <strong><?= htmlspecialchars($r["name"]) ?></strong>
-
-      <div>
-        <?= str_repeat("⭐", $r["rating"]) ?>
-      </div>
-
-      <p class="mb-0"><?= htmlspecialchars($r["comment"]) ?></p>
-
-    </div>
-
-  <?php endforeach; ?>
-
-</div>
 ` : ""}
     `;
 
@@ -372,33 +304,8 @@ async function toggleSave(mealId, button) {
 
 
 </script>
-<script>
-async function submitReview(){
 
-  const rating = document.getElementById("rating").value;
-  const comment = document.getElementById("comment").value;
 
-  const res = await fetch("addReview.php", {
-    method:"POST",
-    headers:{"Content-Type":"application/x-www-form-urlencoded"},
-    body:`meal_id=${mealId}&rating=${rating}&comment=${encodeURIComponent(comment)}`
-  });
-
-  const data = await res.json();
-
-  const feedback = document.getElementById("reviewFeedback");
-
-  if(data.success){
-    location.reload();
-  } else {
-    feedback.innerHTML = `
-      <div class="alert alert-warning mt-2">
-        ${data.message}
-      </div>
-    `;
-  }
-}
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

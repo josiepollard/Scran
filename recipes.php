@@ -52,24 +52,24 @@ if (isset($_SESSION["user_id"])) {
 <section class="container my-5">
 
 <!-- SEARCH + SORT (CENTERED) -->
-<div class="row mb-4 justify-content-center align-items-center g-2">
+<div class="d-flex justify-content-center align-items-center gap-2 mb-4 flex-wrap">
 
-  <div class="col-auto">
+  
     <input
-      type="text"
-      id="recipeSearch"
-      class="form-control form-control-lg"
-      placeholder="Search recipes by name..."
-      style="width:350px"
-    >
-  </div>
+  type="text"
+  id="recipeSearch"
+  class="form-control form-control-lg"
+  placeholder="Search recipes by name..."
+  style="width:350px"
+>
+ 
 
-  <div class="col-auto">
-    <select id="sortRecipes" class="form-select form-select-lg">
-      <option value="az">Sort: A → Z</option>
-      <option value="za">Sort: Z → A</option>
-    </select>
-  </div>
+  <select id="sortRecipes" class="form-select form-select-lg" style="width:220px">
+  <option value="az">Sort: A → Z</option>
+  <option value="za">Sort: Z → A</option>
+  <option value="newest">Sort: Newest</option>
+<option value="oldest">Sort: Oldest</option>
+</select>
 
 </div>
 
@@ -148,12 +148,24 @@ return `
 
 function sortMeals(meals){
 
+
+
+// 🆕 NEWEST FIRST (highest ID first)
+if(currentSort === "newest"){
+return [...meals].sort((a,b)=> Number(b.idMeal) - Number(a.idMeal));
+}
+
+// 🕰️ OLDEST FIRST (lowest ID first)
+if(currentSort === "oldest"){
+return [...meals].sort((a,b)=> Number(a.idMeal) - Number(b.idMeal));
+}
+
+// 🔤 DEFAULT SORTS
 return [...meals].sort((a,b)=>{
 
 if(currentSort === "az"){
 return a.strMeal.localeCompare(b.strMeal);
 }
-
 else{
 return b.strMeal.localeCompare(a.strMeal);
 }
@@ -163,12 +175,17 @@ return b.strMeal.localeCompare(a.strMeal);
 }
 
 
+
 function renderMeals(meals){
 
 const container = document.getElementById("recipes-container");
 
 if(!meals.length){
+
+
 container.innerHTML = `<p class="text-center">No recipes found.</p>`;
+
+
 return;
 }
 

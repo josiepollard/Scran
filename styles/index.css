@@ -1,19 +1,13 @@
 /* =========================
-   GLOBAL VARIABLES
+  Reused Value
 ========================= */
-
 :root{
     --mustard:#fdb302;
-    --dark-grey:#1f1f1f;
 }
 
-
-
-
 /* =========================
-   HERO / BANNER
+  Banners
 ========================= */
-
 .scran-hero-main{
   position:relative;
   width:100%;
@@ -46,66 +40,24 @@
   font-weight:500;
 }
 
-
-/* =========================
-   PAGE BANNER IMAGES
-========================= */
-
-.page-home .scran-hero-main{
-  background-image:url('../images/index-banner.png');
-}
-
-.page-recipes .scran-hero-main{
-  background-image:url('../images/recipes-banner.png');
-}
-
-.page-breakfast .scran-hero-main{
-  background-image:url('../images/breakfast-banner.png');
-}
-
-.page-desserts .scran-hero-main{
-  background-image:url('../images/desserts-banner.png');
-}
-
-.page-starter .scran-hero-main{
-  background-image:url('../images/starter-banner.png');
-}
-
-.page-side .scran-hero-main{
-  background-image:url('../images/sides-banner.png');
-}
-
-.page-vegetarian .scran-hero-main{
-  background-image:url('../images/veggie-banner.png');
-}
-
-.page-vegan .scran-hero-main{
-  background-image:url('../images/vegan-banner.png');
-}
-
-.page-saved .scran-hero-main{
-  background-image:url('../images/saved-banner.png');
-}
-
-.page-cupboard .scran-hero-main{
-  background-image:url('../images/cupboard-banner.png');
-}
-
-.page-contact .scran-hero-main{
-  background-image:url('../images/contact-banner.png');
-}
-
-.page-scrandom .scran-hero-main{
-  background-image:url('../images/scrando-banner.png');
-}
-
-
+/* Banner images */
+.page-home .scran-hero-main{background-image:url('../images/index-banner.png');}
+.page-recipes .scran-hero-main{background-image:url('../images/recipes-banner.png');}
+.page-breakfast .scran-hero-main{background-image:url('../images/breakfast-banner.png');}
+.page-desserts .scran-hero-main{background-image:url('../images/desserts-banner.png');}
+.page-starter .scran-hero-main{background-image:url('../images/starter-banner.png');}
+.page-side .scran-hero-main{background-image:url('../images/sides-banner.png');}
+.page-vegetarian .scran-hero-main{background-image:url('../images/veggie-banner.png');}
+.page-vegan .scran-hero-main{background-image:url('../images/vegan-banner.png');}
+.page-saved .scran-hero-main{background-image:url('../images/saved-banner.png');}
+.page-cupboard .scran-hero-main{background-image:url('../images/cupboard-banner.png');}
+.page-contact .scran-hero-main{background-image:url('../images/contact-banner.png');}
+.page-scrandom .scran-hero-main{background-image:url('../images/scrando-banner.png');}
 
 
 /* =========================
-   RECIPE CARDS
+   Recipe cards
 ========================= */
-
 .recipe-card-img{
   height:180px;
   object-fit:cover;
@@ -113,9 +65,8 @@
 
 
 /* =========================
-   CATEGORY CARDS
+   Category cards
 ========================= */
-
 .category-card{
   text-decoration:none;
   color:inherit;
@@ -141,30 +92,25 @@
 
 
 /* =========================
-   FOOTER
+   Footer
 ========================= */
-
-
 .scran-footer{
   background:black;
   color:#fff;
   font-family:'Fredoka',sans-serif;
 }
 
-/* spacing */
 .scran-footer .container{
   padding-top:50px;
   padding-bottom:30px;
 }
 
-/* headings */
 .scran-footer h4,
 .scran-footer h5{
   font-weight:600;
   margin-bottom:15px;
 }
 
-/* links */
 .footer-link{
   color:#ccc;
   text-decoration:none;
@@ -177,7 +123,6 @@
   color:var(--mustard);
 }
 
-/* social links */
 .social-link{
   color:#ccc;
   text-decoration:none;
@@ -188,7 +133,6 @@
   color:var(--mustard);
 }
 
-/* bottom section */
 .scran-footer .border-top{
   border-color:#333 !important;
 }
@@ -199,9 +143,8 @@
 
 
 /* =========================
-   RECIPE PAGE
+  Recipe page
 ========================= */
-
 .recipe-container img{
   max-height:400px;
   object-fit:cover;
@@ -209,30 +152,26 @@
 
 
 /* =========================
-   NAVBAR FIXED
+   Navbar
 ========================= */
-
 .scran-nav{
     background: black;
     padding: 12px 0;
 }
 
-/* Container alignment */
 .scran-nav .container-fluid{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* Logo */
 .scran-logo{
-    font-size:50px; /* reduced from 50 */
+    font-size:50px; 
     font-weight:600;
     font-family:'Fredoka',sans-serif;
     color:white;
 }
 
-/* Nav links */
 .navbar-nav .nav-link{
     color:#fff;
     font-weight:500;
@@ -245,7 +184,6 @@
     color:var(--mustard);
 }
 
-/* Dropdown */
 .dropdown-menu{
     border-radius:8px;
     border:none;
@@ -256,7 +194,9 @@
     color:#000;
 }
 
-
+/* =========================
+   Home page
+========================= */
 .scrandom-section {
   background: #f4f4f4;
   color: #222;
@@ -264,11 +204,31 @@
 }
 .scrandom-section:hover {
   background: linear-gradient(135deg, #bf70e1, #f482c8, #f5d968);
-  
+}
+
+/* carousel */
+.recipes-scroll-row {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+
+.recipes-scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+.recipe-scroll-item {
+  flex: 0 0 calc((100% - 4.5rem) / 4);
 }
 
 
-/* dark mode */
+
+/* =========================
+   Dark mode
+========================= */
 .dark-mode {
   background-color: #121212;
   color: #f1f1f1;
@@ -303,25 +263,9 @@ background: linear-gradient(135deg, #4d066c, #810551, #885d02);
 
 
 
-
-
-
-.recipes-scroll-row {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  padding-bottom: 0.5rem;
-}
-
-.recipes-scroll-row::-webkit-scrollbar {
-  display: none;
-}
-
-.recipe-scroll-item {
-  flex: 0 0 calc((100% - 4.5rem) / 4);
-}
+/* =========================
+   Media Queries
+========================= */
 
 @media (max-width: 991.98px) {
   .recipe-scroll-item {
@@ -334,12 +278,6 @@ background: linear-gradient(135deg, #4d066c, #810551, #885d02);
     flex: 0 0 calc((100% - 1.5rem) / 2);
   }
 }
-
-
-
-/* =========================
-   MOBILE
-========================= */
 
 @media(max-width:768px){
 

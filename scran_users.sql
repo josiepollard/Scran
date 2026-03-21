@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2026 at 11:09 PM
+-- Generation Time: Mar 21, 2026 at 11:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -29,17 +29,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `saved_recipes` (
   `id` int(11) NOT NULL,
-  `user_email` varchar(100) DEFAULT NULL,
-  `meal_id` varchar(20) DEFAULT NULL
+  `user_id` int(11) NOT NULL,
+  `meal_id` varchar(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `saved_recipes`
 --
 
-INSERT INTO `saved_recipes` (`id`, `user_email`, `meal_id`) VALUES
-(1, 'josie', '52965'),
-(2, 'josie', '53379');
+INSERT INTO `saved_recipes` (`id`, `user_id`, `meal_id`, `created_at`) VALUES
+(68, 3, '53050', '2026-03-21 21:27:17'),
+(69, 3, '53094', '2026-03-21 21:27:17');
 
 -- --------------------------------------------------------
 
@@ -49,17 +50,18 @@ INSERT INTO `saved_recipes` (`id`, `user_email`, `meal_id`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
-(1, 'josie', 'josie@josie.com', '$2y$10$ub0Il3M6y0iDHl6w5H7PC.ZewNx/vrHAxvJl1iIYy/Irpkwi5EB62');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`) VALUES
+(3, 'Josie', 'josie@g.com', '$2y$10$hTa8uLXEygYGiiOJkNgyuuG8XiikPbbarab6Q56A0hG0VIJKlOm5G', '2026-03-21 21:04:18');
 
 --
 -- Indexes for dumped tables
@@ -69,7 +71,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
 -- Indexes for table `saved_recipes`
 --
 ALTER TABLE `saved_recipes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_user_recipe` (`user_id`,`meal_id`);
 
 --
 -- Indexes for table `users`
@@ -86,13 +89,23 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `saved_recipes`
 --
 ALTER TABLE `saved_recipes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `saved_recipes`
+--
+ALTER TABLE `saved_recipes`
+  ADD CONSTRAINT `fk_saved_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

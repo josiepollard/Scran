@@ -160,7 +160,14 @@ if (isset($_SESSION["user_id"])) {
 </section>
 <!-- CATEGORIES SECTION END -->
 
+<!-- RECENTLY VIEWED -->
+<section class="container my-5">
+  <h2 class="mb-3">Recently Viewed</h2>
 
+  <div id="recent-row" class="recipes-scroll-row">
+    <!-- Cards go here -->
+  </div>
+</section>
 
 
 
@@ -366,9 +373,40 @@ function startAutoScroll(){
   }, 6000); // 6 seconds
 }
 
+async function loadRecentRecipes(){
+
+  const row = document.getElementById("recent-row");
+  let recent = JSON.parse(localStorage.getItem("recentRecipes")) || [];
+
+  if(recent.length === 0){
+    row.innerHTML = `<p class="text-muted">No recently viewed recipes.</p>`;
+    return;
+  }
+
+  try{
+
+    const requests = recent.map(id =>
+      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then(res => res.json())
+    );
+
+    const results = await Promise.all(requests);
+
+    const meals = results
+      .map(r => r.meals ? r.meals[0] : null)
+      .filter(Boolean);
+
+    row.innerHTML = meals.map(createRecipeCard).join("");
+
+  } catch(err){
+    console.error(err);
+    row.innerHTML = `<p class="text-danger">Failed to load recent recipes.</p>`;
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   getRandomRecipesCarousel();
+  loadRecentRecipes(); // 👈 ADD THIS
   startAutoScroll();
 });
 </script>

@@ -300,6 +300,31 @@ async function toggleSave(mealId, button) {
   }
 }
 
+// =========================
+// RECENTLY VIEWED STORAGE
+// =========================
+
+function saveRecentlyViewed(mealId){
+  let recent = JSON.parse(localStorage.getItem("recentRecipes")) || [];
+
+  // Remove if already exists (avoid duplicates)
+  recent = recent.filter(id => id !== mealId);
+
+  // Add to front
+  recent.unshift(mealId);
+
+  // Limit to 10 items
+  recent = recent.slice(0, 10);
+
+  localStorage.setItem("recentRecipes", JSON.stringify(recent));
+}
+
+// Run when page loads
+document.addEventListener("DOMContentLoaded", () => {
+  if(mealId){
+    saveRecentlyViewed(mealId);
+  }
+});
 
 </script>
 

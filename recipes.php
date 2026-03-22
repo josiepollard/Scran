@@ -149,18 +149,15 @@ return `
 function sortMeals(meals){
 
 
-
-// 🆕 NEWEST FIRST (highest ID first)
 if(currentSort === "newest"){
 return [...meals].sort((a,b)=> Number(b.idMeal) - Number(a.idMeal));
 }
 
-// 🕰️ OLDEST FIRST (lowest ID first)
+
 if(currentSort === "oldest"){
 return [...meals].sort((a,b)=> Number(a.idMeal) - Number(b.idMeal));
 }
 
-// 🔤 DEFAULT SORTS
 return [...meals].sort((a,b)=>{
 
 if(currentSort === "az"){

@@ -259,6 +259,10 @@ background: linear-gradient(135deg, #4d066c, #810551, #885d02);
   background: #444;
 }
 
+.dark-mode .text-muted {
+  color: #bbb !important;
+}
+
 
 
 

@@ -286,7 +286,7 @@ function scrollRecipes(direction) {
     behavior: "smooth"
   });
 
-  // 🔁 LOOP RESET
+  //  LOOP RESET
   const maxScroll = row.scrollWidth / 2;
 
   if (row.scrollLeft >= maxScroll) {

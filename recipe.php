@@ -285,12 +285,10 @@ async function toggleSave(mealId, button) {
     }
 
     if (data.saved) {
-      // ✅ NOW SAVED
       button.textContent = "Saved";
       button.classList.remove("btn-warning");
       button.classList.add("btn-dark");
     } else {
-      // ❌ NOW REMOVED
       button.textContent = "Save Recipe";
       button.classList.remove("btn-dark");
       button.classList.add("btn-warning");

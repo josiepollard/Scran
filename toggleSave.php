@@ -23,7 +23,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // 🔴 Already saved → REMOVE it
+   
     $stmt = $conn->prepare("DELETE FROM saved_recipes WHERE user_id = ? AND meal_id = ?");
     $stmt->bind_param("is", $user_id, $meal_id);
     $stmt->execute();
@@ -34,7 +34,7 @@ if ($result->num_rows > 0) {
     ]);
 
 } else {
-    // 🟢 Not saved → ADD it
+    
     $stmt = $conn->prepare("INSERT INTO saved_recipes (user_id, meal_id) VALUES (?, ?)");
     $stmt->bind_param("is", $user_id, $meal_id);
     $stmt->execute();

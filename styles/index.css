@@ -54,6 +54,13 @@
 .page-contact .scran-hero-main{background-image:url('../images/contact-banner.png');}
 .page-scrandom .scran-hero-main{background-image:url('../images/scrando-banner.png');}
 
+.page-meetTheTeam .scran-hero-main {
+
+  background: linear-gradient(135deg, #534df8, #36e9d1);
+  position: relative;
+  color: white;
+}
+
 
 /* =========================
    Recipe cards
@@ -226,6 +233,28 @@
 
 
 
+.team-section {
+  background-color: #f8f9fa;
+}
+
+.team-card {
+  padding: 20px;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+}
+
+.team-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
 /* =========================
    Dark mode
 ========================= */
@@ -261,6 +290,47 @@ background: linear-gradient(135deg, #4d066c, #810551, #885d02);
 
 .dark-mode .text-muted {
   color: #bbb !important;
+}
+/* DARK MODE BASE */
+body.page-meetTheTeam.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+/* HERO TEXT */
+body.page-meetTheTeam.dark-mode .scran-hero-main-title {
+  color: #ffffff;
+}
+
+/* TEAM SECTION */
+body.page-meetTheTeam.dark-mode .team-section {
+  background-color: #181818;
+}
+
+/* TEAM CARDS */
+body.page-meetTheTeam.dark-mode .team-card {
+  background-color: #242424;
+  color: #f1f1f1;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+}
+
+/* MUTED TEXT */
+body.page-meetTheTeam.dark-mode .text-muted {
+  color: #bbbbbb !important;
+}
+
+/* IMAGE BORDER (optional nice touch) */
+body.page-meetTheTeam.dark-mode .team-card img {
+  border: 3px solid #333;
+}
+
+/* LINKS (if any) */
+body.page-meetTheTeam.dark-mode a {
+  color: #9ecbff;
+}
+
+body.page-meetTheTeam.dark-mode a:hover {
+  color: #ffffff;
 }
 
 

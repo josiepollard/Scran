@@ -20,6 +20,7 @@
         <ul class="list-unstyled">
           <li><a href="recipes.php" class="footer-link">All Recipes</a></li>
           <li><a href="contact.php" class="footer-link">Contact</a></li>
+          <li><a href="meetTheTeam.php" class="footer-link">Meet The Team</a></li>
         </ul>
       </div>
 

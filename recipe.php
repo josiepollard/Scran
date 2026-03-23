@@ -1,35 +1,39 @@
-<?php
-include "config.php";
-?>
+<!-- 
+individual recipe page. 
+* loads recipe details from TheMealDB API based on ID 
+ -->
+ 
 
 <?php
-$savedMealIds = [];
+  include "config.php";
 
-if (isset($_SESSION["user_id"])) {
-    $stmt = $conn->prepare("SELECT meal_id FROM saved_recipes WHERE user_id = ?");
-    $stmt->bind_param("i", $_SESSION["user_id"]);
-    $stmt->execute();
-    $result = $stmt->get_result();
+  $savedMealIds = [];
 
-    while ($row = $result->fetch_assoc()) {
-        $savedMealIds[] = $row["meal_id"];
-    }
+  if (isset($_SESSION["user_id"])) {
+      $stmt = $conn->prepare("SELECT meal_id FROM saved_recipes WHERE user_id = ?");
+      $stmt->bind_param("i", $_SESSION["user_id"]);
+      $stmt->execute();
+      $result = $stmt->get_result();
 
-    $stmt->close();
-}
+      while ($row = $result->fetch_assoc()) {
+          $savedMealIds[] = $row["meal_id"];
+      }
+
+      $stmt->close();
+  }
 ?>
-
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="styles/index.css">
-<title>Recipe</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="styles/index.css">
+  <title>SCRAN</title>
 </head>
 
 <body>
@@ -40,37 +44,31 @@ if (isset($_SESSION["user_id"])) {
 
 <!-- RECIPE SECTION -->
 <section class="container my-5" id="recipe-container">
-
   <div class="text-center py-5">
     Loading recipe...
   </div>
-
 </section>
-
-
-
 
 <!-- FOOTER -->
 <?php include 'includes/footer.php'; ?>
 
-<script id="gkt5y9">
-const savedMealIds = <?php echo json_encode($savedMealIds); ?>;
-</script>
+
 
 <script>
+const savedMealIds = <?php echo json_encode($savedMealIds); ?>; 
+const params = new URLSearchParams(window.location.search); 
+const mealId = params.get("id"); 
 
-// Get ID from URL
-const params = new URLSearchParams(window.location.search);
-const mealId = params.get("id");
 
-
-// =========================
-// INGREDIENTS
-// =========================
+//=================================
+// ingredients 
+//=================================
 function getIngredients(meal){
 
-  let ingredients = [];
+  let ingredients = []; // array to hold ingredient strings
 
+  // loop through possible ingredient slots 
+  // mealdb API has up to 20 ingredients
   for(let i = 1; i <= 20; i++){
     const ingredient = meal[`strIngredient${i}`];
     const measure = meal[`strMeasure${i}`];
@@ -85,12 +83,13 @@ function getIngredients(meal){
 
 
 // =========================
-// STEPS (NEW)
+// steps
 // =========================
 function getSteps(instructions){
 
-  const text = instructions.replace(/\r/g, "");
+  const text = instructions.replace(/\r/g, ""); // remove carriage returns
 
+  // check for common step delimiters and split accordingly
   if(/step\s*\d+/i.test(text)){
     return text
       .split(/step\s*\d+/i)
@@ -112,16 +111,23 @@ function getSteps(instructions){
 }
 
 
-
+//=================================
+// youtube embed
+//=================================
 function getYouTubeEmbed(url) {
-  if (!url) return null;
+  if (!url) return null; 
 
-  const videoId = url.split("v=")[1];
-  if (!videoId) return null;
+  const videoId = url.split("v=")[1]; // extract video ID from URL
+  if (!videoId) return null; 
 
-  return `https://www.youtube.com/embed/${videoId}`;
+  return `https://www.youtube.com/embed/${videoId}`; // return embed URL with ID appended
 }
 
+
+
+//=================================
+// youtube embed
+//=================================
 function getSaveButton(mealId) {
   <?php if (isset($_SESSION['user_id'])): ?>
 
@@ -144,6 +150,7 @@ function getSaveButton(mealId) {
   <?php endif; ?>
 }
 
+
 // =========================
 // LOAD RECIPE
 // =========================
@@ -151,15 +158,15 @@ async function loadRecipe(){
 
   const container = document.getElementById("recipe-container");
 
+  // if no meal ID provided, show error message
   if(!mealId){
     container.innerHTML = "<p class='text-center'>No recipe found.</p>";
     return;
   }
 
   try{
-
     const res = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}` // fetch recipe details from API using meal ID
     );
 
     const data = await res.json();
@@ -194,8 +201,8 @@ async function loadRecipe(){
           </p>
 
           <div class="mt-3">
-  ${getSaveButton(meal.idMeal)}
-</div>
+            ${getSaveButton(meal.idMeal)}
+          </div>
 
           <h4 class="mt-4">Ingredients</h4>
           <ul>${ingredientsList}</ul>
@@ -204,28 +211,24 @@ async function loadRecipe(){
 
       </div>
 
-      <!-- INSTRUCTIONS -->
-<div class="mt-5">
-  <h3>Instructions</h3>
-  <ol class="mt-3">
-    ${stepsList}
-  </ol>
-</div>
+      <div class="mt-5">
+        <h3>Instructions</h3>
+        <ol class="mt-3">
+          ${stepsList}
+        </ol>
+      </div>
 
-<!-- VIDEO -->
-${videoUrl ? `
-<div class="mt-5">
-  <h3>Video Tutorial</h3>
+      ${videoUrl ? `
+      <div class="mt-5">
+        <h3>Video Tutorial</h3>
 
-  <div class="ratio ratio-16x9 mt-3">
-    <iframe src="${videoUrl}" 
-            title="YouTube video"
-            allowfullscreen>
-    </iframe>
-  </div>
-</div>
-
-
+        <div class="ratio ratio-16x9 mt-3">
+          <iframe src="${videoUrl}" 
+                  title="YouTube video"
+                  allowfullscreen>
+          </iframe>
+        </div>
+      </div>
 ` : ""}
     `;
 
@@ -238,8 +241,10 @@ ${videoUrl ? `
 
 }
 
-document.addEventListener("DOMContentLoaded", loadRecipe);
 
+// =========================
+// save recipe
+// =========================
 async function saveRecipe(mealId, button) {
   try {
     const response = await fetch("saveRecipe.php", {
@@ -303,14 +308,13 @@ async function toggleSave(mealId, button) {
 // =========================
 // RECENTLY VIEWED STORAGE
 // =========================
-
 function saveRecentlyViewed(mealId){
   let recent = JSON.parse(localStorage.getItem("recentRecipes")) || [];
 
   // Remove if already exists (avoid duplicates)
   recent = recent.filter(id => id !== mealId);
 
-  // Add to front
+  // Add to start of array
   recent.unshift(mealId);
 
   // Limit to 10 items
@@ -326,9 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+document.addEventListener("DOMContentLoaded", loadRecipe);
 </script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

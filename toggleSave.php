@@ -3,16 +3,18 @@ include "config.php";
 
 header('Content-Type: application/json');
 
+// Check if user is logged in
 if (!isset($_SESSION["user_id"])) {
     echo json_encode(["success" => false, "message" => "Not logged in"]);
     exit();
 }
 
-$meal_id = $_POST["recipe_id"] ?? "";
-$user_id = $_SESSION["user_id"];
+$meal_id = $_POST["recipe_id"] ?? ""; // Get meal ID from POST data
+$user_id = $_SESSION["user_id"]; // Get user ID from session
 
+// Validate meal ID
 if (!$meal_id) {
-    echo json_encode(["success" => false]);
+    echo json_encode(["success" => false, "message" => "Invalid meal ID"]);
     exit();
 }
 

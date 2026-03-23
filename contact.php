@@ -9,35 +9,26 @@
 <link rel="stylesheet" type="text/css" href="styles/index.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<title>Scran</title>
+<title>SCRAN | Contact</title>
 <link rel="icon" type="image/x-icon" href="/images/favi.png">
 
 </head>
 
 <body class="page-contact">
 
-<!-- NAVBAR -->
+<!-- navbar -->
 <?php include 'includes/navbar.php'; ?>
 
-
-<!-- HERO -->
+<!-- Banner -->
 <section class="scran-hero-main d-flex align-items-center justify-content-center text-center">
   <div class="scran-hero-main-overlay"></div>
-
   <div class="scran-hero-main-content container">
     <h1 class="scran-hero-main-title">Contact</h1>
   </div>
 </section>
 
-
-
-
-
-<!-- FOOTER -->
+<!-- footer -->
 <?php include 'includes/footer.php'; ?>
-
-
-
 
 </body>
 </html>

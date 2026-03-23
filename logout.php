@@ -1,9 +1,11 @@
 <?php
-include "config.php";
+include "config.php"; // database connection
 
-$_SESSION = [];
+// Clear all session variables
+$_SESSION = []; 
 session_unset();
 session_destroy();
 
+// Redirect to homepage after logout
 header("Location: index.php");
 exit();

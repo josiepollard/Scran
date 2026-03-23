@@ -3,6 +3,7 @@ include "config.php";
 
 header('Content-Type: application/json');
 
+// Check if user is logged in
 if (!isset($_SESSION["user_id"])) {
     echo json_encode(["success" => false, "message" => "Not logged in"]);
     exit();
@@ -13,16 +14,17 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
-$meal_id = trim($_POST["recipe_id"] ?? "");
-$user_id = $_SESSION["user_id"];
+$meal_id = trim($_POST["recipe_id"] ?? ""); // Get meal ID from POST data
+$user_id = $_SESSION["user_id"]; // Get user ID from session
 
+// Validate meal ID
 if ($meal_id === "") {
     echo json_encode(["success" => false]);
     exit();
 }
 
-$stmt = $conn->prepare("INSERT IGNORE INTO saved_recipes (user_id, meal_id) VALUES (?, ?)");
-$stmt->bind_param("is", $user_id, $meal_id);
+$stmt = $conn->prepare("INSERT IGNORE INTO saved_recipes (user_id, meal_id) VALUES (?, ?)"); // Use INSERT IGNORE to prevent duplicates
+$stmt->bind_param("is", $user_id, $meal_id); // Bind user ID as integer and meal ID as string
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);

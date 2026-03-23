@@ -1,4 +1,9 @@
-<?php
+<!-- 
+ profile settings page
+ * User can change their name, password or delete their account
+ -->
+ 
+ <?php
 include "config.php";
 
 if (!isset($_SESSION["user_id"])) {
@@ -10,22 +15,25 @@ if (!isset($_SESSION["user_id"])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="styles/index.css">
-<title>Profile</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="styles/index.css">
+  <title>SCRAN | Profile Settings</title>
 </head>
 
 <body>
 
+<!-- Navbar -->
 <?php include 'includes/navbar.php'; ?>
 
+<!-- profile settings section -->
 <div class="container my-5" style="max-width:600px;">
 
   <h2 class="mb-4">Profile Settings</h2>
 
-  <!-- CHANGE NAME -->
+  <!-- change name -->
   <div class="card p-3 mb-4">
     <h5>Change Name</h5>
 
@@ -35,7 +43,7 @@ if (!isset($_SESSION["user_id"])) {
     <button onclick="updateName()" class="btn btn-dark">Update Name</button>
   </div>
 
-  <!-- CHANGE PASSWORD -->
+  <!-- password change -->
   <div class="card p-3 mb-4">
     <h5>Change Password</h5>
 
@@ -45,28 +53,29 @@ if (!isset($_SESSION["user_id"])) {
     <button onclick="changePassword()" class="btn btn-dark">Update Password</button>
   </div>
 
-  <!-- DELETE ACCOUNT -->
+  <!-- account deletion -->
   <div class="card p-3 border-danger">
     <h5 class="text-danger">Delete Account</h5>
-
     <p>This action cannot be undone.</p>
-
     <button onclick="deleteAccount()" class="btn btn-danger">
       Delete Account
     </button>
   </div>
-
-
 </div>
 
-<!-- FOOTER -->
+<!-- footer -->
 <?php include 'includes/footer.php'; ?>
 
+
 <script>
+
+//=================================
+// change name 
+//=================================
 async function updateName(){
+  const name = document.getElementById("nameInput").value; // get new name from input
 
-  const name = document.getElementById("nameInput").value;
-
+  // send new name to server
   const res = await fetch("updateProfile.php", {
     method:"POST",
     headers:{"Content-Type":"application/x-www-form-urlencoded"},
@@ -75,6 +84,7 @@ async function updateName(){
 
   const data = await res.json();
 
+  // if update successful, reload page to show new name in navbar
   if(data.success){
     alert("Name updated!");
     location.reload();
@@ -83,11 +93,15 @@ async function updateName(){
   }
 }
 
+//=================================
+// change password
+//=================================
 async function changePassword(){
 
-  const current = document.getElementById("currentPassword").value;
-  const newPass = document.getElementById("newPassword").value;
+  const current = document.getElementById("currentPassword").value; // get current password from input
+  const newPass = document.getElementById("newPassword").value; // get new password from input
 
+  // send passwords to server for validation and update
   const res = await fetch("changePassword.php", {
     method:"POST",
     headers:{"Content-Type":"application/x-www-form-urlencoded"},
@@ -99,23 +113,28 @@ async function changePassword(){
   alert(data.message);
 }
 
+//=================================
+// delete account
+//=================================
 async function deleteAccount(){
 
+// confirm deletion with user
   if(!confirm("Are you sure you want to delete your account?")){
     return;
   }
 
-  const res = await fetch("deleteAccount.php", { method:"POST" });
+// send delete request to server
+  const res = await fetch("deleteAccount.php", { method:"POST" }); 
   const data = await res.json();
 
+  // if deletion successful, redirect to homepage
   if(data.success){
     window.location.href = "index.php";
   } else {
     alert("Error deleting account");
   }
 }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+</script>
 </body>
 </html>

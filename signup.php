@@ -1,62 +1,73 @@
+<!-- 
+sign up page
+* Users can create an account by providing their name, email, and password.
+ -->
 <?php
-include "config.php";
+  include "config.php";
 
-$message = "";
+  $message = "";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name = trim($_POST["name"] ?? "");
-    $email = trim($_POST["email"] ?? "");
-    $password = $_POST["password"] ?? "";
-    $confirm = $_POST["confirm"] ?? "";
+  if ($_SERVER["REQUEST_METHOD"] === "POST") {
+      $name = trim($_POST["name"] ?? "");
+      $email = trim($_POST["email"] ?? "");
+      $password = $_POST["password"] ?? "";
+      $confirm = $_POST["confirm"] ?? "";
 
-    if ($name === "" || $email === "" || $password === "" || $confirm === "") {
-        $message = "Please fill in all fields.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $message = "Please enter a valid email address.";
-    } elseif (strlen($password) < 6) {
-        $message = "Password must be at least 6 characters.";
-    } elseif ($password !== $confirm) {
-        $message = "Passwords do not match.";
-    } else {
-        $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
-        $check->bind_param("s", $email);
-        $check->execute();
-        $check->store_result();
+      // ensure all fields filled in
+      if ($name === "" || $email === "" || $password === "" || $confirm === "") {
+          $message = "Please fill in all fields.";
+      } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          $message = "Please enter a valid email address.";
+      } elseif (strlen($password) < 6) {
+          $message = "Password must be at least 6 characters.";
+      } elseif ($password !== $confirm) {
+          $message = "Passwords do not match.";
+      } else {
+          $check = $conn->prepare("SELECT id FROM users WHERE email = ?"); 
+          $check->bind_param("s", $email);
+          $check->execute();
+          $check->store_result();
 
-        if ($check->num_rows > 0) {
-            $message = "An account with that email already exists.";
-        } else {
-            $hashed = password_hash($password, PASSWORD_DEFAULT);
+          // Check if email already exists
+          if ($check->num_rows > 0) {
+              $message = "An account with that email already exists.";
+          } else {
+              $hashed = password_hash($password, PASSWORD_DEFAULT); // Hash the password 
 
-            $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $name, $email, $hashed);
+              $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)"); // SQL statement to insert new user
+              $stmt->bind_param("sss", $name, $email, $hashed);
 
-            if ($stmt->execute()) {
-                $message = "Account created successfully. You can now log in.";
-            } else {
-                $message = "Something went wrong. Please try again.";
-            }
+              // Execute the statement and check if successful
+              if ($stmt->execute()) {
+                  $message = "Account created successfully. You can now log in.";
+              } else {
+                  $message = "Something went wrong. Please try again.";
+              }
 
-            $stmt->close();
-        }
+              $stmt->close();
+          }
 
-        $check->close();
-    }
-}
+          $check->close();
+      }
+  }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="styles/index.css">
-<title>Sign Up - SCRAN</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/index.css">
+  <title>SCRAN | Sign Up</title>
 </head>
+
 <body class="page-home">
 
+<!-- nav -->
 <?php include 'includes/navbar.php'; ?>
 
+<!-- sign up-->
 <section class="container d-flex align-items-center justify-content-center" style="min-height:80vh;">
   <div class="card shadow p-4" style="width:100%; max-width:400px;">
     <h2 class="text-center mb-4">Create Account</h2>
@@ -95,6 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
 </section>
 
+<!-- footer -->
 <?php include 'includes/footer.php'; ?>
+
 </body>
 </html>

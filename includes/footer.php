@@ -1,12 +1,12 @@
 <!-- 
- FOOTER 
- * reused across pages
- * contains logo, links and theme toggle button
- -->
+  FOOTER 
+  * reused across pages
+  * contains logo, links and theme toggle button
+-->
 
 <footer class="scran-footer text-white mt-5">
   <div class="container py-5">
-    <div class="row"> 
+    <div class="row">
 
       <!-- Logo Section -->
       <div class="col-md-4 mb-4">
@@ -43,34 +43,34 @@
 
     <!-- Footer bottom -->
     <div class="text-center pt-4 border-top mt-4">
-      <small>© 2026 SCRAN. All rights reserved.</small>
+      <small>© 2026 SCRAN.</small>
     </div>
   </div>
 </footer>
 
 <script>
-(function(){
-  const button = document.getElementById("themeToggle"); //Gets reference to toggle button
-
-  // Apply saved theme on page load, saved in local storage
-  const savedTheme = localStorage.getItem("theme");
-
-  // if saved theme is dark, apply dark mode
-  if(savedTheme === "dark"){
-    document.body.classList.add("dark-mode");
-
-    // update button text
-    if(button) button.textContent = "Light Mode";
-  }
-
-  // Toggle click for theme choice
-  if(button){ //only run if the button is present on page, error prevention 
-    button.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode"); //Apply/disable dark-mode class
-      const isDark = document.body.classList.contains("dark-mode"); //checks if dark mode is active
-      localStorage.setItem("theme", isDark ? "dark" : "light"); //save users theme choice
-      button.textContent = isDark ? "Light Mode" : "Dark Mode"; //update button text depending on current theme
-    });
-  }
-})();
+  (function(){
+    const button = document.getElementById("themeToggle"); // Gets reference to toggle button HTML element
+  
+    // Apply saved theme on page load. This is saved in local storage
+    const savedTheme = localStorage.getItem("theme");
+  
+    // if saved theme is dark, apply dark mode CSS class 
+    if(savedTheme === "dark"){
+      document.body.classList.add("dark-mode");
+  
+      // update button text to reflect theme
+      if(button) button.textContent = "Light Mode";
+    }
+  
+    // Toggle click for theme choice
+    if(button){ 
+      button.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode"); //Apply/disable dark-mode class
+        const isDark = document.body.classList.contains("dark-mode"); //checks if dark mode is active
+        localStorage.setItem("theme", isDark ? "dark" : "light"); //save users theme choice
+        button.textContent = isDark ? "Light Mode" : "Dark Mode"; //update button text depending on current theme
+      });
+    }
+  })();
 </script>

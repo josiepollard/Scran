@@ -333,7 +333,20 @@ body.page-meetTheTeam.dark-mode a:hover {
   color: #ffffff;
 }
 
+/* Default (Normal) */
+body.text-normal {
+  font-size: 1em;
+}
 
+/* Large */
+body.text-large {
+  font-size: 1.25em;
+}
+
+/* Extra Large */
+body.text-xlarge {
+  font-size: 1.5em;
+}
 
 
 

@@ -360,3 +360,10 @@ body.page-meetTheTeam.dark-mode a:hover {
 }
 
 }
+
+@media (max-width: 991px) {
+  .dropdown-menu {
+    position: static;
+    float: none;
+  }
+}

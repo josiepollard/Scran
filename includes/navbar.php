@@ -81,7 +81,7 @@ if (session_status() === PHP_SESSION_NONE) {
           Hi, <?php echo htmlspecialchars($_SESSION["user_name"]); ?>
         </a>
 
-        <ul class="dropdown-menu dropdown-menu-end">
+       <ul class="dropdown-menu dropdown-menu-lg-end">
           <li>
           <!-- Link to profile settings page-->
             <a class="dropdown-item" href="profile.php">

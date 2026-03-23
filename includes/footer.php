@@ -20,7 +20,7 @@
         <ul class="list-unstyled">
           <li><a href="recipes.php" class="footer-link">All Recipes</a></li>
           <li><a href="contact.php" class="footer-link">Contact</a></li>
-          <li><a href="meetTheTeam.php" class="footer-link">Meet The Team</a></li>
+          <li><a href="meetTheTeam.php" class="footer-link">Meet the team</a></li>
         </ul>
       </div>
 
@@ -34,11 +34,12 @@
         </div>
       </div>
 
-      <!-- Theme + Text size controls -->
-<div class="text-center mt-3 d-flex justify-content-center gap-2 flex-wrap">
-  <button id="themeToggle" class="btn btn-outline-secondary btn-sm">Dark Mode</button>
-  <button id="textSizeToggle" class="btn btn-outline-secondary btn-sm">Text Size: Normal</button>
-</div>
+      <!-- Theme toggle -->
+      <!-- allows switch between light and dark mode. light by default. -->
+      <div class="text-center mt-3">
+        <button id="themeToggle" class="btn btn-outline-secondary btn-sm">Dark Mode</button>
+      </div>
+    </div>
 
     <!-- Footer bottom -->
     <div class="text-center pt-4 border-top mt-4">
@@ -69,59 +70,6 @@
       const isDark = document.body.classList.contains("dark-mode"); //checks if dark mode is active
       localStorage.setItem("theme", isDark ? "dark" : "light"); //save users theme choice
       button.textContent = isDark ? "Light Mode" : "Dark Mode"; //update button text depending on current theme
-    });
-  }
-})();
-</script>
-
-<script>
-(function(){
-  const button = document.getElementById("themeToggle");
-  const textBtn = document.getElementById("textSizeToggle");
-
-  // ===== THEME (existing) =====
-  const savedTheme = localStorage.getItem("theme");
-
-  if(savedTheme === "dark"){
-    document.body.classList.add("dark-mode");
-    if(button) button.textContent = "Light Mode";
-  }
-
-  if(button){
-    button.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      const isDark = document.body.classList.contains("dark-mode");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-      button.textContent = isDark ? "Light Mode" : "Dark Mode";
-    });
-  }
-
-  // ===== TEXT SIZE =====
-  const sizes = ["text-normal", "text-large", "text-xlarge"];
-  const labels = ["Normal", "Large", "Extra Large"];
-
-  let currentSize = localStorage.getItem("textSize") || "text-normal";
-
-  // Apply saved size
-  document.body.classList.add(currentSize);
-
-  if(textBtn){
-    textBtn.textContent = "Text Size: " + labels[sizes.indexOf(currentSize)];
-
-    textBtn.addEventListener("click", () => {
-      let index = sizes.indexOf(currentSize);
-      index = (index + 1) % sizes.length;
-
-      // Remove old class
-      document.body.classList.remove(currentSize);
-
-      // Apply new
-      currentSize = sizes[index];
-      document.body.classList.add(currentSize);
-
-      // Save + update label
-      localStorage.setItem("textSize", currentSize);
-      textBtn.textContent = "Text Size: " + labels[index];
     });
   }
 })();

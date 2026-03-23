@@ -56,9 +56,10 @@ if (session_status() === PHP_SESSION_NONE) {
       </ul>
     </li>
 
-    <li class="nav-item"><a class="nav-link" href="whatsInYourCupboard.php">What's in your cupboard?</a></li>
+   
     <li class="nav-item"><a class="nav-link" href="scrandom.php">Scrandom!</a></li>
     <li class="nav-item"><a class="nav-link" href="savedRecipes.php">Saved recipes</a></li>
+     <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
   </ul>
 
       <!-- Right hand side, user login & Profile settings link -->

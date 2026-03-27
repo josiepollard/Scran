@@ -27,6 +27,30 @@
   </div>
 </section>
 
+<div class="contactForm">
+                        <form>
+                            <h2>Send Message</h2>
+                            <div class="inputBox">
+                                <input type="text" name="" required="required">
+                                <span>Full Name</span>
+                            </div>
+
+                            <div class="inputBox">
+                                <input type="email" name="" required="required">
+                                <span>Email</span>
+                            </div>
+
+                            <div class="inputBox">
+                                <textarea required="required"></textarea>
+                                <span>Type Your Message...</span>
+                            </div>
+
+                            <div class="inputBox">
+                                <input type="submit" name="" value="Send">
+                            </div>
+                        </form>
+                    </div>
+
 <!-- footer -->
 <?php include 'includes/footer.php'; ?>
 

@@ -229,12 +229,16 @@ document.getElementById("gameArea").innerHTML = `
 
 <br>
 
-<!-- Button reloads the page to start again -->
-<button class="btn btn-warning" onclick="location.reload()">
+<!-- Go to YOUR recipe page -->
+<a href="recipe.php?id=${recipe.idMeal}" 
+   class="btn btn-warning m-2">
+   Go to Recipe
+</a>
+
+<!-- Play Again button -->
+<button class="btn btn-warning m-2" onclick="location.reload()">
 Play Again
 </button>
-
-</div>
 
 `;
 

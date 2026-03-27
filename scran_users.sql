@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2026 at 11:42 PM
+-- Generation Time: Mar 27, 2026 at 04:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -39,8 +39,7 @@ CREATE TABLE `saved_recipes` (
 --
 
 INSERT INTO `saved_recipes` (`id`, `user_id`, `meal_id`, `created_at`) VALUES
-(68, 3, '53050', '2026-03-21 21:27:17'),
-(69, 3, '53094', '2026-03-21 21:27:17');
+(109, 3, '53382', '2026-03-25 23:49:37');
 
 -- --------------------------------------------------------
 
@@ -61,7 +60,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`) VALUES
-(3, 'Josie', 'josie@g.com', '$2y$10$hTa8uLXEygYGiiOJkNgyuuG8XiikPbbarab6Q56A0hG0VIJKlOm5G', '2026-03-21 21:04:18');
+(3, 'Josie Pollard', 'josie@g.com', '$2y$10$hTa8uLXEygYGiiOJkNgyuuG8XiikPbbarab6Q56A0hG0VIJKlOm5G', '2026-03-21 21:04:18');
 
 --
 -- Indexes for dumped tables
@@ -89,7 +88,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `saved_recipes`
 --
 ALTER TABLE `saved_recipes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `users`

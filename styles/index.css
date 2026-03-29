@@ -171,7 +171,7 @@
     bottom: -2px;
     left: 0;
     width: 100%;
-    height: 4px;
+    height:2px;
     
     background: var(--mustard);
 
@@ -379,7 +379,33 @@ body.page-meetTheTeam.dark-mode .team-card img {
   border: 3px solid #333;
 }
 
+/* DARK MODE FORM */
+body.dark-mode .form-control {
+    background-color: #212529;
+    color: #ffffff;
+    border: 1px solid #495057;
+}
 
+body.dark-mode .form-control::placeholder {
+    color: #adb5bd;
+}
+
+body.dark-mode .form-control:focus {
+    background-color: #212529;
+    color: #ffffff;
+    border-color: #6c757d;
+    box-shadow: none;
+}
+
+/* Button tweak */
+body.dark-mode .btn-dark {
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+body.dark-mode .btn-dark:hover {
+    background-color: #495057;
+}
 
 
 

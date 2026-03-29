@@ -28,6 +28,25 @@
   </div>
 </section>
 
+<!-- ABOUT SECTION -->
+<section class="py-5">
+  <div class="container text-center" style="max-width: 800px;">
+    
+    
+    <p class="lead">
+      SCRAN is a project designed to make discovering recipes simple and accessible for everyone.<br><br>
+
+      We are a team of students working collaboratively to design and develop this website as part of our coursework. 
+      Each member of the team has contributed their skills across planning, design, development, and research to bring SCRAN to life.
+
+    </p>
+
+    
+
+
+  </div>
+</section>
+
 <!-- TEAM SECTION -->
 <section class="team-section py-5">
   <div class="container">

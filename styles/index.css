@@ -211,8 +211,9 @@
 }
 
 .dropdown-item:hover{
-    background:#f8f9fa;
+    background:#ffca2c;
     color:#000;
+    transition: 0.3s;
 }
 
 
@@ -228,7 +229,7 @@
   transition: transform 0.3s ease;
 }
 
-/* Animate ONLY on hover */
+/* Animate on hover */
 .scrandom-section:hover {
   animation: gradientMove 5s ease infinite;
   transform: scale(1.01);
@@ -289,6 +290,19 @@
   width: 120px;
   height: 120px;
   object-fit: cover;
+}
+/* transition from light to dark */
+body {
+  transition: all 0.4s ease;
+}
+/* box around the contact form */
+.contact-box {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+      box-shadow: 0 0px 10px var(--mustard),
+                0 0px 20px var(--mustard),
+                0 0px 30px rgba(253,179,2,0.6);
 }
 
 /* =========================
@@ -407,7 +421,14 @@ body.dark-mode .btn-dark:hover {
     background-color: #495057;
 }
 
-
+.dark-mode .contact-box {
+  background: #686666;
+  padding: 30px;
+  border-radius: 15px;
+      box-shadow: 0 0px 10px var(--mustard),
+                0 0px 20px var(--mustard),
+                0 0px 30px rgba(253,179,2,0.6);
+}
 
 
 

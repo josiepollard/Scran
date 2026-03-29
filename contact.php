@@ -34,17 +34,20 @@
 <!-- form -->
 <div class="container my-5" style="max-width:600px;">
 
- 
+  <div class="contact-box mx-auto" style="max-width:600px;">
+
 
   <div id="feedback"></div>
 
-  <form id="contactForm">
-    <input type="text" id="name" class="form-control mb-3" placeholder="Your name">
-    <input type="email" id="email" class="form-control mb-3" placeholder="Your email">
-    <textarea id="message" class="form-control mb-3" rows="5" placeholder="Your message"></textarea>
-    <button type="submit" class="btn btn-dark w-100">Send Message</button>
-  </form>
+    <form id="contactForm">
+      <input type="text" id="name" class="form-control mb-3" placeholder="Your name">
+     <input type="email" id="email" class="form-control mb-3" placeholder="Your email">
+      <textarea id="message" class="form-control mb-3" rows="5" placeholder="Your message"></textarea>
+      <button type="submit" class="btn btn-dark w-100">Send Message</button>
+    </form>
+  </div>
 </div>
+
 
 <!-- footer -->
 <?php include 'includes/footer.php'; ?>

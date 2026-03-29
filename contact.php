@@ -27,32 +27,65 @@
   </div>
 </section>
 
-<div class="contactForm">
-                        <form>
-                            <h2>Send Message</h2>
-                            <div class="inputBox">
-                                <input type="text" name="" required="required">
-                                <span>Full Name</span>
-                            </div>
+<!-- form -->
+<div class="container my-5" style="max-width:600px;">
 
-                            <div class="inputBox">
-                                <input type="email" name="" required="required">
-                                <span>Email</span>
-                            </div>
+  <h2 class="mb-4">Contact Us</h2>
 
-                            <div class="inputBox">
-                                <textarea required="required"></textarea>
-                                <span>Type Your Message...</span>
-                            </div>
+  <div id="feedback"></div>
 
-                            <div class="inputBox">
-                                <input type="submit" name="" value="Send">
-                            </div>
-                        </form>
-                    </div>
+  <form id="contactForm">
+    <input type="text" id="name" class="form-control mb-3" placeholder="Your name">
+    <input type="email" id="email" class="form-control mb-3" placeholder="Your email">
+    <textarea id="message" class="form-control mb-3" rows="5" placeholder="Your message"></textarea>
+    <button type="submit" class="btn btn-dark w-100">Send Message</button>
+  </form>
+</div>
 
 <!-- footer -->
 <?php include 'includes/footer.php'; ?>
+
+<script>
+    // Handle form submission
+    document.getElementById("contactForm").addEventListener("submit", async function(e){
+
+    e.preventDefault();  // prevent page reload
+
+    // Get input values
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    const feedback = document.getElementById("feedback"); 
+
+    //validation to check if all fields are filled
+    if(!name || !email || !message){
+        feedback.innerHTML = `<div class="alert alert-warning">All fields are required</div>`;
+        return;
+    }
+
+    // Send form data to server 
+    const res = await fetch("submitContact.php", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&message=${encodeURIComponent(message)}`
+    });
+
+    const data = await res.json();
+
+    // Show success or error message based on response
+    if(data.success){
+        feedback.innerHTML = `<div class="alert alert-success">Message sent successfully!</div>`;
+        document.getElementById("contactForm").reset();
+    } else {
+        feedback.innerHTML = `<div class="alert alert-danger">Failed to send message</div>`;
+    }
+
+    });
+</script>
+
 
 </body>
 </html>

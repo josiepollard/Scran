@@ -24,13 +24,17 @@
   <div class="scran-hero-main-overlay"></div>
   <div class="scran-hero-main-content container">
     <h1 class="scran-hero-main-title">Contact</h1>
+    
+        <p class="scran-hero-main-subtitle">
+     Got a question, feedback, or just want to say hello? We'd love to hear from you!
+    </p>
   </div>
 </section>
 
 <!-- form -->
 <div class="container my-5" style="max-width:600px;">
 
-  <h2 class="mb-4">Contact Us</h2>
+ 
 
   <div id="feedback"></div>
 

@@ -30,7 +30,9 @@
   <!-- Main banner content -->
   <div class="scran-hero-main-content container">
     <h1 class="scran-hero-main-title">Scrandom!</h1>
-    <p>Can't decide what to eat? Pick your favourite until one scran remains.</p>
+     <p class="scran-hero-main-subtitle">
+     Can't decide what to eat? Pick your favourite until one scran remains.
+    </p>
   </div>
 
 </section>

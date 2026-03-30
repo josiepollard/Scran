@@ -65,6 +65,14 @@
           <p class="text-muted">Project Manager & Developer </p>
         </div>
       </div>
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="team-card text-center">
+          <img src="images/josie.png" class="img-fluid rounded-circle mb-3" alt="Josie Photo">
+          <h4>Josie Pollard</h4>
+          <p class="text-muted">Developer & Researcher </p>
+        </div>
+      </div>
 
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
@@ -74,13 +82,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-3">
-        <div class="team-card text-center">
-          <img src="images/josie.png" class="img-fluid rounded-circle mb-3" alt="Josie Photo">
-          <h4>Josie Pollard</h4>
-          <p class="text-muted">Developer & Researcher </p>
-        </div>
-      </div>
+      
 
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">

@@ -76,7 +76,7 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
-          <img src="images/placeholder.png" class="img-fluid rounded-circle mb-3" alt="Member 4">
+          <img src="images/mia.png" class="img-fluid rounded-circle mb-3" alt="Mia Photo">
           <h4>Mia Gardner-Smith</h4>
           <p class="text-muted">Systems Analyst & Business Analyst </p>
         </div>

@@ -58,6 +58,12 @@
   color: white;   
 }
 
+.page-bot .scran-hero-main {
+  background: linear-gradient(135deg, #534df8, #36e9d1);
+  position: relative;
+  color: white;   
+}
+
 
 /* =========================
    Recipe cards
@@ -476,6 +482,25 @@ body.dark-mode .btn-dark:hover {
 #instructionsList li.bg-warning {
   border-radius: 6px;
   padding: 6px;
+}
+
+
+/* Chatbot container */
+.chatbot-card {
+  max-width: 600px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Chat box */
+#chatBox {
+  height: 300px;
+  overflow-y: auto;
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
 }
 
 /* =========================

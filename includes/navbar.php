@@ -53,6 +53,7 @@
         </li>
 
         <li class="nav-item"><a class="nav-link" href="scrandom.php">Scrandom!</a></li>
+        <li class="nav-item"><a class="nav-link" href="askScran.php">SCRAN Bot</a></li>
         <li class="nav-item"><a class="nav-link" href="savedRecipes.php">Saved recipes</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
       </ul>

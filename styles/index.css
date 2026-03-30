@@ -375,6 +375,7 @@ body {
    background: #8d47ac;
 }
 
+
 .dark-mode .btn-dark{
   background: #444;
 }
@@ -447,6 +448,14 @@ body.dark-mode .btn-dark:hover {
                 0 0px 30px rgba(253,179,2,0.6);
 }
 
+.dark-mode #instructionsList li.bg-warning {
+  background: #8d47ac !important;
+}
+
+.dark-mode .btn-outline-dark {
+  color: #fff;
+  border-color: #fff;
+}
 /* =========================
    font size changer
 ========================= */
@@ -464,7 +473,10 @@ body.dark-mode .btn-dark:hover {
 
 
 
-
+#instructionsList li.bg-warning {
+  border-radius: 6px;
+  padding: 6px;
+}
 
 /* =========================
    Media Queries

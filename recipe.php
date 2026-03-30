@@ -233,11 +233,19 @@ async function loadRecipe(){
       </div>
 
       <div class="mt-5">
-        <h3>Instructions</h3>
-        <ol class="mt-3">
-          ${stepsList}
-        </ol>
-      </div>
+  <h3>Instructions</h3>
+
+  <div class="mb-3 d-flex gap-2 flex-wrap">
+    <button id="playPauseBtn" class="btn btn-outline-dark btn-sm" onclick="togglePlayPause()">Play</button>
+      <button class="btn btn-outline-dark btn-sm" onclick="prevStep()">Prev</button>
+      <button class="btn btn-outline-dark btn-sm" onclick="nextStep()">Next</button>
+      <button class="btn btn-outline-dark btn-sm" onclick="stopReading()">Stop</button>
+  </div>
+
+<ol class="mt-3" id="instructionsList">
+  ${stepsList}
+</ol>
+</div>
 
       
 
@@ -411,7 +419,9 @@ function saveRecentlyViewed(mealId){
   localStorage.setItem("recentRecipes", JSON.stringify(recent));
 }
 
-//reviews
+// =========================
+// REVIEWS
+// =========================
 async function submitReview(){
 
   const comment = document.getElementById("reviewText").value.trim();
@@ -494,6 +504,172 @@ document.addEventListener("DOMContentLoaded", () => {
     saveRecentlyViewed(mealId);
   }
 });
+
+
+// =========================
+// RECIPE STEPS
+// =========================
+let steps = []; // array to hold instruction steps
+let currentStep = 0; // index of current step being read
+let speech = null; // Holds the current speech object
+let isPlaying = false; // flag to track if instructions are currently being read
+let isPaused = false; // flag to track if instructions are currently paused
+let autoNextTimeout = null; // timeout ID for auto-advancing to next step
+const STEP_DELAY = 1000; // 1 seconds delay between steps when auto-advancing
+
+// Load steps from DOM
+function loadSteps() {
+  const list = document.getElementById("instructionsList");
+  if (!list) return;
+
+  steps = Array.from(list.querySelectorAll("li")).map(li => li.textContent);
+}
+
+// Highlight current step
+function highlightStep() {
+  const items = document.querySelectorAll("#instructionsList li");
+  // highlight current step, remove highlight from others
+  items.forEach((li, index) => {
+    li.classList.toggle("bg-warning", index === currentStep);
+  });
+}
+
+// Speak current step
+function speakStep() {
+  if (!steps[currentStep]) return; //if no step, do nothing
+
+  speechSynthesis.cancel(); // stop any ongoing speech before starting new one
+
+  // Create new speech object for current step
+  speech = new SpeechSynthesisUtterance(steps[currentStep]);
+  speech.lang = "en-GB";
+  speech.rate = 1;
+
+  highlightStep(); // update highlight to current step
+
+  // When speech finishes → auto next
+  speech.onend = () => {
+
+    // Only continue if still playing 
+    if (!isPlaying) return;
+
+    // Delay before next step
+    autoNextTimeout = setTimeout(() => {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        speakStep();
+      } else {
+        // finished all steps
+        stopReading();
+      }
+    }, STEP_DELAY);
+  };
+
+  speechSynthesis.speak(speech); // start speaking current step
+
+  //update state
+  isPlaying = true;
+  isPaused = false;
+
+  //button update
+  const btn = document.getElementById("playPauseBtn");
+  if (btn) btn.textContent = "Pause";
+}
+
+// remove highlight from all steps
+function clearHighlight() {
+  const items = document.querySelectorAll("#instructionsList li");
+  items.forEach(li => li.classList.remove("bg-warning"));
+}
+
+// Start from beginning
+function startReading() {
+  loadSteps();
+  currentStep = 0;
+  speakStep();
+}
+
+// Next step
+function nextStep() {
+  clearTimeout(autoNextTimeout);
+
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    speakStep();
+  }
+}
+
+// Previous step
+function prevStep() {
+  clearTimeout(autoNextTimeout);
+
+  if (currentStep > 0) {
+    currentStep--;
+    speakStep();
+  }
+}
+
+// Pause
+function pauseReading() {
+  speechSynthesis.pause();
+  isPlaying = false;
+  isPaused = true;
+
+  clearTimeout(autoNextTimeout);
+}
+
+// Resume
+function resumeReading() {
+  speechSynthesis.resume();
+}
+
+function stopReading() {
+  speechSynthesis.cancel();
+  clearHighlight();
+  currentStep = 0;
+
+  clearTimeout(autoNextTimeout);
+
+  //reset states
+  isPlaying = false;
+  isPaused = false;
+
+  const btn = document.getElementById("playPauseBtn");
+  if (btn) btn.textContent = "Play";
+}
+
+
+function togglePlayPause() {
+  const btn = document.getElementById("playPauseBtn");
+
+  // If nothing started yet
+  if (!isPlaying && !isPaused) {
+    loadSteps();
+    currentStep = 0;
+    speakStep();
+    isPlaying = true;
+    btn.textContent = "Pause";
+    return;
+  }
+
+  // If currently playing → pause
+  if (isPlaying) {
+    speechSynthesis.pause();
+    isPlaying = false;
+    isPaused = true;
+    btn.textContent = "Resume";
+    return;
+  }
+
+  // If paused → resume
+  if (isPaused) {
+    speechSynthesis.resume();
+    isPlaying = true;
+    isPaused = false;
+    btn.textContent = "Pause";
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", loadRecipe);
 </script>

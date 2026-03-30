@@ -55,7 +55,7 @@
 .page-meetTheTeam .scran-hero-main {
   background: linear-gradient(135deg, #534df8, #36e9d1);
   position: relative;
-  color: white;
+  color: white;   
 }
 
 
@@ -291,6 +291,22 @@
   height: 120px;
   object-fit: cover;
 }
+
+.image-team {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.image-team img {
+  width: 100%;
+  max-width: 600px; /* controls size */
+  height: auto;
+  border-radius: 10px;
+}
+
+
+
+
 /* transition from light to dark */
 body {
   transition: all 0.4s ease;

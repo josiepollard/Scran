@@ -1,5 +1,3 @@
-
-
 <?php
 header("Content-Type: application/json");
 
@@ -7,7 +5,6 @@ header("Content-Type: application/json");
 $requestData = json_decode(file_get_contents("php://input"), true);
 $messages = $requestData["messages"] ?? [];
 
-// ✅ Extract latest user message
 $lastMessage = "";
 if (!empty($messages)) {
   $lastMessage = end($messages)["content"];
@@ -32,7 +29,7 @@ if ($response !== false) {
   }
 }
 
-// 🔑 ADD YOUR API KEY HERE
+// ADD API KEY HERE
 $apiKey = ""; // removed for security
 
 

@@ -462,6 +462,45 @@ body.dark-mode .btn-dark:hover {
   color: #fff;
   border-color: #fff;
 }
+
+
+/* Chatbot card */
+body.dark-mode .chatbot-card {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  border: none;
+}
+
+/* Chat box */
+body.dark-mode #chatBox {
+  background-color: #2a2a2a;
+  color: #f1f1f1;
+}
+
+/* Individual messages */
+body.dark-mode #chatBox div {
+  color: #f1f1f1;
+}
+
+/* Input field */
+body.dark-mode #chatInput {
+  background-color: #2a2a2a;
+  color: #f1f1f1;
+  border: 1px solid #444;
+}
+
+body.dark-mode #chatInput::placeholder {
+  color: #aaa;
+}
+
+/* Send button */
+body.dark-mode .chatbot-card .btn-dark {
+  background-color: #8d47ac;
+  color: #fff;
+  border: none;
+}
+
+
 /* =========================
    font size changer
 ========================= */

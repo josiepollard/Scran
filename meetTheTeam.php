@@ -60,7 +60,7 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
-          <img src="images/placeholder.png" class="img-fluid rounded-circle mb-3" alt="Member 3">
+          <img src="images/kay.png" class="img-fluid rounded-circle mb-3" alt="Kay Photo">
           <h4>Kay Wesley</h4>
           <p class="text-muted">Project Manager & Developer </p>
         </div>
@@ -76,7 +76,7 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
-          <img src="images/josie.jpg" class="img-fluid rounded-circle mb-3" alt="Josie Photo">
+          <img src="images/josie.png" class="img-fluid rounded-circle mb-3" alt="Josie Photo">
           <h4>Josie Pollard</h4>
           <p class="text-muted">Developer & Researcher </p>
         </div>
@@ -84,7 +84,7 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
-          <img src="images/placeholder.png" class="img-fluid rounded-circle mb-3" alt="Member 2">
+          <img src="images/callum.png" class="img-fluid rounded-circle mb-3" alt="Callum Photo">
           <h4>Callum Sealy</h4>
           <p class="text-muted">Developer & Researcher</p>
         </div>

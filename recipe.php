@@ -21,6 +21,26 @@ individual recipe page.
 
       $stmt->close();
   }
+
+ $reviews = [];
+
+$user_id = $_SESSION["user_id"] ?? 0;
+
+$stmt = $conn->prepare("
+  SELECT reviews.*, users.name 
+  FROM reviews 
+  JOIN users ON users.id = reviews.user_id
+  WHERE meal_id = ?
+  ORDER BY (reviews.user_id = ?) DESC, created_at DESC
+");
+
+$stmt->bind_param("si", $_GET["id"], $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+while($row = $result->fetch_assoc()){
+  $reviews[] = $row;
+}
 ?>
 
 
@@ -31,6 +51,7 @@ individual recipe page.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="styles/index.css">
   <title>SCRAN</title>
@@ -218,6 +239,8 @@ async function loadRecipe(){
         </ol>
       </div>
 
+      
+
       ${videoUrl ? `
       <div class="mt-5">
         <h3>Video Tutorial</h3>
@@ -230,6 +253,71 @@ async function loadRecipe(){
         </div>
       </div>
 ` : ""}
+
+<div class="mt-5">
+
+  <h3>Reviews</h3>
+
+  <?php if(isset($_SESSION["user_id"])): ?>
+    
+    <div class="card p-3 mb-3">
+      <textarea id="reviewText" class="form-control mb-2" placeholder="Write your review..."></textarea>
+      <button onclick="submitReview()" class="btn btn-dark">Post Review</button>
+      <div id="reviewFeedback"></div>
+    </div>
+
+  <?php else: ?>
+
+    <p><a href="login.php">Log in</a> to leave a review</p>
+
+  <?php endif; ?>
+
+  <div id="reviewsList">
+
+ <?php foreach($reviews as $r): ?>
+
+  <div class="card p-3 mb-2 <?= (isset($_SESSION["user_id"]) && $r["user_id"] == $_SESSION["user_id"]) ? 'border-dark' : '' ?>">
+
+    <!-- HEADER: NAME (left) + DATE + TRASH (right stacked) -->
+    <div class="d-flex justify-content-between align-items-start">
+
+      <!-- LEFT: NAME -->
+      <strong>
+        <?= htmlspecialchars($r["user_id"] == ($_SESSION["user_id"] ?? 0) ? "You" : $r["name"]) ?>
+      </strong>
+
+      <!-- RIGHT: DATE + TRASH ICON STACKED -->
+      <div class="text-end">
+
+        <small class="text-muted d-block">
+          <?= date("d M Y", strtotime($r["created_at"])) ?>
+        </small>
+
+        <?php if(isset($_SESSION["user_id"]) && $r["user_id"] == $_SESSION["user_id"]): ?>
+          <button onclick="deleteReview()" 
+                  class="btn btn-sm btn-link text-danger p-0 mt-1"
+                  title="Delete review">
+            <i class="bi bi-trash"></i>
+          </button>
+        <?php endif; ?>
+
+      </div>
+
+    </div>
+
+    <!-- COMMENT -->
+    <p class="mt-2 mb-0">
+      <?= htmlspecialchars($r["comment"]) ?>
+    </p>
+
+  </div>
+
+<?php endforeach; ?>
+
+  </div>
+
+</div>
+
     `;
 
   } catch(error){
@@ -321,6 +409,83 @@ function saveRecentlyViewed(mealId){
   recent = recent.slice(0, 10);
 
   localStorage.setItem("recentRecipes", JSON.stringify(recent));
+}
+
+//reviews
+async function submitReview(){
+
+  const comment = document.getElementById("reviewText").value.trim();
+  const feedback = document.getElementById("reviewFeedback");
+
+  if(comment.length < 3){
+    feedback.innerHTML = `<div class="alert alert-warning">Write something meaningful</div>`;
+    return;
+  }
+
+  const res = await fetch("addReview.php", {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:`meal_id=${mealId}&comment=${encodeURIComponent(comment)}`
+  });
+
+  const data = await res.json();
+
+  if(data.success){
+
+ const today = new Date().toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric"
+});
+
+document.getElementById("reviewsList").insertAdjacentHTML("afterbegin", `
+  <div class="card p-3 mb-2 border-dark">
+
+    <div class="d-flex justify-content-between align-items-start">
+
+      <strong>You</strong>
+
+      <div class="text-end">
+        <small class="text-muted d-block">${today}</small>
+
+        <button onclick="deleteReview()" 
+                class="btn btn-sm btn-link text-danger p-0 mt-1"
+                title="Delete review">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <p class="mt-2 mb-0">${comment}</p>
+
+  </div>
+`);
+
+  document.getElementById("reviewText").value = "";
+  feedback.innerHTML = `<div class="alert alert-success">Review added!</div>`;
+
+
+  } else {
+    feedback.innerHTML = `<div class="alert alert-warning">${data.message}</div>`;
+  }
+}
+
+async function deleteReview(){
+
+  if(!confirm("Delete your review?")) return;
+
+  const res = await fetch("deleteReview.php", {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:`meal_id=${mealId}`
+  });
+
+  const data = await res.json();
+
+  if(data.success){
+    location.reload(); // simple approach
+  }
 }
 
 // Run when page loads

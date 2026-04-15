@@ -32,7 +32,7 @@ sign up page
           if ($check->num_rows > 0) {
               $message = "An account with that email already exists.";
           } else {
-              $hashed = password_hash($password, PASSWORD_DEFAULT); // Hash the password 
+              $hashed = password_hash($password, PASSWORD_DEFAULT); // Hashes and salts the password https://www.php.net/manual/en/function.password-hash.php#:~:text=salt%20(string)%20%2D%20to%20manually,the%20intended%20mode%20of%20operation.
 
               $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)"); // SQL statement to insert new user
               $stmt->bind_param("sss", $name, $email, $hashed);

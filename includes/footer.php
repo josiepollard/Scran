@@ -34,12 +34,11 @@
         </div>
       </div>
 
-      <!-- Theme toggle -->
-      <!-- allows switch between light and dark mode. light by default. -->
-      <div class="text-center mt-3">
-        <button id="themeToggle" class="btn btn-outline-secondary btn-sm">Dark Mode</button>
-      </div>
-    </div>
+      <!-- Theme + Text Size toggles -->
+<div class="text-center mt-3 d-flex justify-content-center gap-2">
+  <button id="themeToggle" class="btn btn-outline-secondary btn-sm">Dark Mode</button>
+  <button id="textSizeToggle" class="btn btn-outline-secondary btn-sm">Large Text</button>
+</div>
 
     <!-- Footer bottom -->
     <div class="text-center pt-4 border-top mt-4">
@@ -49,28 +48,46 @@
 </footer>
 
 <script>
+
   (function(){
-    const button = document.getElementById("themeToggle"); // Gets reference to toggle button HTML element
-  
-    // Apply saved theme on page load. This is saved in local storage
+    const themeButton = document.getElementById("themeToggle");
+    const textButton = document.getElementById("textSizeToggle");
+
+    // Load saved preferences
     const savedTheme = localStorage.getItem("theme");
-  
-    // if saved theme is dark, apply dark mode CSS class 
+    const savedTextSize = localStorage.getItem("textSize");
+
+    // Apply theme
     if(savedTheme === "dark"){
       document.body.classList.add("dark-mode");
-  
-      // update button text to reflect theme
-      if(button) button.textContent = "Light Mode";
+      if(themeButton) themeButton.textContent = "Light Mode";
     }
-  
-    // Toggle click for theme choice
-    if(button){ 
-      button.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode"); //Apply/disable dark-mode class
-        const isDark = document.body.classList.contains("dark-mode"); //checks if dark mode is active
-        localStorage.setItem("theme", isDark ? "dark" : "light"); //save users theme choice
-        button.textContent = isDark ? "Light Mode" : "Dark Mode"; //update button text depending on current theme
+
+    // Apply text size
+    if(savedTextSize === "large"){
+      document.body.classList.add("large-text");
+      if(textButton) textButton.textContent = "Normal Text";
+    }
+
+    // Theme toggle
+    if(themeButton){
+      themeButton.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        const isDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        themeButton.textContent = isDark ? "Light Mode" : "Dark Mode";
+      });
+    }
+
+    // Text size toggle
+    if(textButton){
+      textButton.addEventListener("click", () => {
+        document.body.classList.toggle("large-text");
+        const isLarge = document.body.classList.contains("large-text");
+        localStorage.setItem("textSize", isLarge ? "large" : "normal");
+        textButton.textContent = isLarge ? "Normal Text" : "Large Text";
       });
     }
   })();
+
 </script>

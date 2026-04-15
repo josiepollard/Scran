@@ -28,24 +28,30 @@
   </div>
 </section>
 
-<!-- ABOUT SECTION -->
+<!-- ABOUT + IMAGE SIDE BY SIDE -->
 <section class="py-5">
-  <div class="container text-center" style="max-width: 800px;">
-    
-    
-    <p class="lead">
-      SCRAN is a project designed to make discovering recipes simple and accessible for everyone.<br><br>
+  <div class="container">
+    <div class="row align-items-center">
+      
+      <!-- Text -->
+      <div class="col-md-6">
+        <p class="lead">
+          SCRAN is a project designed to make discovering recipes simple and accessible for everyone.<br><br>
 
-      We are a team of students working collaboratively to design and develop this website as part of our coursework. 
-      Each member of the team has contributed their skills across planning, design, development, and research to bring SCRAN to life.
+          We are a team of students working collaboratively to design and develop this website as part of our coursework. 
+          Each member of the team has contributed their skills across planning, design, development, and research to bring SCRAN to life.
+        </p>
+      </div>
 
-    </p>
+      <!-- Image -->
+      <div class="col-md-6 text-center">
+        <img src="images/theTeam.jpeg" alt="Team photo" class="img-fluid rounded">
+      </div>
 
-    
-
-
+    </div>
   </div>
 </section>
+
 
 <!-- TEAM SECTION -->
 <section class="team-section py-5">
@@ -54,23 +60,15 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
-          <img src="images/placeholder.png" class="img-fluid rounded-circle mb-3" alt="Member 3">
+          <img src="images/kay.png" class="img-fluid rounded-circle mb-3" alt="Kay Photo">
           <h4>Kay Wesley</h4>
           <p class="text-muted">Project Manager & Developer </p>
         </div>
       </div>
-
+      
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
-          <img src="images/placeholder.png" class="img-fluid rounded-circle mb-3" alt="Member 4">
-          <h4>Mia Gardner-Smith</h4>
-          <p class="text-muted">Systems Analyst & Business Analyst </p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="team-card text-center">
-          <img src="images/placeholder.png" class="img-fluid rounded-circle mb-3" alt="Member 1">
+          <img src="images/josie.png" class="img-fluid rounded-circle mb-3" alt="Josie Photo">
           <h4>Josie Pollard</h4>
           <p class="text-muted">Developer & Researcher </p>
         </div>
@@ -78,7 +76,17 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
-          <img src="images/placeholder.png" class="img-fluid rounded-circle mb-3" alt="Member 2">
+          <img src="images/mia.png" class="img-fluid rounded-circle mb-3" alt="Mia Photo">
+          <h4>Mia Gardner-Smith</h4>
+          <p class="text-muted">Systems Analyst & Business Analyst </p>
+        </div>
+      </div>
+
+      
+
+      <div class="col-md-6 col-lg-3">
+        <div class="team-card text-center">
+          <img src="images/callum.png" class="img-fluid rounded-circle mb-3" alt="Callum Photo">
           <h4>Callum Sealy</h4>
           <p class="text-muted">Developer & Researcher</p>
         </div>
@@ -87,6 +95,8 @@
     </div>
   </div>
 </section>
+
+
 
 
 <!-- FOOTER -->

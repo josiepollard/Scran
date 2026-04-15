@@ -21,6 +21,26 @@ individual recipe page.
 
       $stmt->close();
   }
+
+ $reviews = [];
+
+$user_id = $_SESSION["user_id"] ?? 0;
+
+$stmt = $conn->prepare("
+  SELECT reviews.*, users.name 
+  FROM reviews 
+  JOIN users ON users.id = reviews.user_id
+  WHERE meal_id = ?
+  ORDER BY (reviews.user_id = ?) DESC, created_at DESC
+");
+
+$stmt->bind_param("si", $_GET["id"], $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+while($row = $result->fetch_assoc()){
+  $reviews[] = $row;
+}
 ?>
 
 
@@ -31,6 +51,7 @@ individual recipe page.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="styles/index.css">
   <title>SCRAN</title>
@@ -212,11 +233,21 @@ async function loadRecipe(){
       </div>
 
       <div class="mt-5">
-        <h3>Instructions</h3>
-        <ol class="mt-3">
-          ${stepsList}
-        </ol>
-      </div>
+  <h3>Instructions</h3>
+
+  <div class="mb-3 d-flex gap-2 flex-wrap">
+    <button id="playPauseBtn" class="btn btn-outline-dark btn-sm" onclick="togglePlayPause()">Play</button>
+      <button class="btn btn-outline-dark btn-sm" onclick="prevStep()">Prev</button>
+      <button class="btn btn-outline-dark btn-sm" onclick="nextStep()">Next</button>
+      <button class="btn btn-outline-dark btn-sm" onclick="stopReading()">Stop</button>
+  </div>
+
+<ol class="mt-3" id="instructionsList">
+  ${stepsList}
+</ol>
+</div>
+
+      
 
       ${videoUrl ? `
       <div class="mt-5">
@@ -230,6 +261,71 @@ async function loadRecipe(){
         </div>
       </div>
 ` : ""}
+
+<div class="mt-5">
+
+  <h3>Reviews</h3>
+
+  <?php if(isset($_SESSION["user_id"])): ?>
+    
+    <div class="card p-3 mb-3">
+      <textarea id="reviewText" class="form-control mb-2" placeholder="Write your review..."></textarea>
+      <button onclick="submitReview()" class="btn btn-dark">Post Review</button>
+      <div id="reviewFeedback"></div>
+    </div>
+
+  <?php else: ?>
+
+    <p><a href="login.php">Log in</a> to leave a review</p>
+
+  <?php endif; ?>
+
+  <div id="reviewsList">
+
+ <?php foreach($reviews as $r): ?>
+
+  <div class="card p-3 mb-2 <?= (isset($_SESSION["user_id"]) && $r["user_id"] == $_SESSION["user_id"]) ? 'border-dark' : '' ?>">
+
+    <!-- HEADER: NAME (left) + DATE + TRASH (right stacked) -->
+    <div class="d-flex justify-content-between align-items-start">
+
+      <!-- LEFT: NAME -->
+      <strong>
+        <?= htmlspecialchars($r["user_id"] == ($_SESSION["user_id"] ?? 0) ? "You" : $r["name"]) ?>
+      </strong>
+
+      <!-- RIGHT: DATE + TRASH ICON STACKED -->
+      <div class="text-end">
+
+        <small class="text-muted d-block">
+          <?= date("d M Y", strtotime($r["created_at"])) ?>
+        </small>
+
+        <?php if(isset($_SESSION["user_id"]) && $r["user_id"] == $_SESSION["user_id"]): ?>
+          <button onclick="deleteReview()" 
+                  class="btn btn-sm btn-link text-danger p-0 mt-1"
+                  title="Delete review">
+            <i class="bi bi-trash"></i>
+          </button>
+        <?php endif; ?>
+
+      </div>
+
+    </div>
+
+    <!-- COMMENT -->
+    <p class="mt-2 mb-0">
+      <?= htmlspecialchars($r["comment"]) ?>
+    </p>
+
+  </div>
+
+<?php endforeach; ?>
+
+  </div>
+
+</div>
+
     `;
 
   } catch(error){
@@ -323,12 +419,257 @@ function saveRecentlyViewed(mealId){
   localStorage.setItem("recentRecipes", JSON.stringify(recent));
 }
 
+// =========================
+// REVIEWS
+// =========================
+async function submitReview(){
+
+  const comment = document.getElementById("reviewText").value.trim();
+  const feedback = document.getElementById("reviewFeedback");
+
+  if(comment.length < 3){
+    feedback.innerHTML = `<div class="alert alert-warning">Write something meaningful</div>`;
+    return;
+  }
+
+  const res = await fetch("addReview.php", {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:`meal_id=${mealId}&comment=${encodeURIComponent(comment)}`
+  });
+
+  const data = await res.json();
+
+  if(data.success){
+
+ const today = new Date().toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric"
+});
+
+document.getElementById("reviewsList").insertAdjacentHTML("afterbegin", `
+  <div class="card p-3 mb-2 border-dark">
+
+    <div class="d-flex justify-content-between align-items-start">
+
+      <strong>You</strong>
+
+      <div class="text-end">
+        <small class="text-muted d-block">${today}</small>
+
+        <button onclick="deleteReview()" 
+                class="btn btn-sm btn-link text-danger p-0 mt-1"
+                title="Delete review">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <p class="mt-2 mb-0">${comment}</p>
+
+  </div>
+`);
+
+  document.getElementById("reviewText").value = "";
+  feedback.innerHTML = `<div class="alert alert-success">Review added!</div>`;
+
+
+  } else {
+    feedback.innerHTML = `<div class="alert alert-warning">${data.message}</div>`;
+  }
+}
+
+async function deleteReview(){
+
+  if(!confirm("Delete your review?")) return;
+
+  const res = await fetch("deleteReview.php", {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:`meal_id=${mealId}`
+  });
+
+  const data = await res.json();
+
+  if(data.success){
+    location.reload(); // simple approach
+  }
+}
+
 // Run when page loads
 document.addEventListener("DOMContentLoaded", () => {
   if(mealId){
     saveRecentlyViewed(mealId);
   }
 });
+
+
+// =========================
+// RECIPE STEPS
+// =========================
+let steps = []; // array to hold instruction steps
+let currentStep = 0; // index of current step being read
+let speech = null; // Holds the current speech object
+let isPlaying = false; // flag to track if instructions are currently being read
+let isPaused = false; // flag to track if instructions are currently paused
+let autoNextTimeout = null; // timeout ID for auto-advancing to next step
+const STEP_DELAY = 1000; // 1 seconds delay between steps when auto-advancing
+
+// Load steps from DOM
+function loadSteps() {
+  const list = document.getElementById("instructionsList");
+  if (!list) return;
+
+  steps = Array.from(list.querySelectorAll("li")).map(li => li.textContent);
+}
+
+// Highlight current step
+function highlightStep() {
+  const items = document.querySelectorAll("#instructionsList li");
+  // highlight current step, remove highlight from others
+  items.forEach((li, index) => {
+    li.classList.toggle("bg-warning", index === currentStep);
+  });
+}
+
+// Speak current step
+function speakStep() {
+  if (!steps[currentStep]) return; //if no step, do nothing
+
+  speechSynthesis.cancel(); // stop any ongoing speech before starting new one
+
+  // Create new speech object for current step
+  speech = new SpeechSynthesisUtterance(steps[currentStep]);
+  speech.lang = "en-GB";
+  speech.rate = 1;
+
+  highlightStep(); // update highlight to current step
+
+  // When speech finishes → auto next
+  speech.onend = () => {
+
+    // Only continue if still playing 
+    if (!isPlaying) return;
+
+    // Delay before next step
+    autoNextTimeout = setTimeout(() => {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        speakStep();
+      } else {
+        // finished all steps
+        stopReading();
+      }
+    }, STEP_DELAY);
+  };
+
+  speechSynthesis.speak(speech); // start speaking current step
+
+  //update state
+  isPlaying = true;
+  isPaused = false;
+
+  //button update
+  const btn = document.getElementById("playPauseBtn");
+  if (btn) btn.textContent = "Pause";
+}
+
+// remove highlight from all steps
+function clearHighlight() {
+  const items = document.querySelectorAll("#instructionsList li");
+  items.forEach(li => li.classList.remove("bg-warning"));
+}
+
+// Start from beginning
+function startReading() {
+  loadSteps();
+  currentStep = 0;
+  speakStep();
+}
+
+// Next step
+function nextStep() {
+  clearTimeout(autoNextTimeout);
+
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    speakStep();
+  }
+}
+
+// Previous step
+function prevStep() {
+  clearTimeout(autoNextTimeout);
+
+  if (currentStep > 0) {
+    currentStep--;
+    speakStep();
+  }
+}
+
+// Pause
+function pauseReading() {
+  speechSynthesis.pause();
+  isPlaying = false;
+  isPaused = true;
+
+  clearTimeout(autoNextTimeout);
+}
+
+// Resume
+function resumeReading() {
+  speechSynthesis.resume();
+}
+
+function stopReading() {
+  speechSynthesis.cancel();
+  clearHighlight();
+  currentStep = 0;
+
+  clearTimeout(autoNextTimeout);
+
+  //reset states
+  isPlaying = false;
+  isPaused = false;
+
+  const btn = document.getElementById("playPauseBtn");
+  if (btn) btn.textContent = "Play";
+}
+
+
+function togglePlayPause() {
+  const btn = document.getElementById("playPauseBtn");
+
+  // If nothing started yet
+  if (!isPlaying && !isPaused) {
+    loadSteps();
+    currentStep = 0;
+    speakStep();
+    isPlaying = true;
+    btn.textContent = "Pause";
+    return;
+  }
+
+  // If currently playing → pause
+  if (isPlaying) {
+    speechSynthesis.pause();
+    isPlaying = false;
+    isPaused = true;
+    btn.textContent = "Resume";
+    return;
+  }
+
+  // If paused → resume
+  if (isPaused) {
+    speechSynthesis.resume();
+    isPlaying = true;
+    isPaused = false;
+    btn.textContent = "Pause";
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", loadRecipe);
 </script>

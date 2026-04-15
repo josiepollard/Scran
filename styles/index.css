@@ -304,7 +304,19 @@ body {
                 0 0px 20px var(--mustard),
                 0 0px 30px rgba(253,179,2,0.6);
 }
+/* =========================
+   Dark/Light mode Button 
+========================= */
+#themeToggle {
+  border: 2px solid #fdb302;
+  color: #fdb302;
+  background: transparent;
 
+  box-shadow: 
+    0 0 10px #fdb302,
+    0 0 20px #fdb302,
+    0 0 40px rgba(253,179,2,0.9);
+}
 /* =========================
    Dark mode
 ========================= */

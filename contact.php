@@ -33,20 +33,49 @@
 
 
 
-<!-- form -->
-<div class="container my-5" style="max-width:600px;">
+<!-- CONTACT SECTION -->
+<div class="container my-5">
+  <div class="row align-items-start">
 
-  <div class="contact-box mx-auto" style="max-width:600px;">
+    <!-- LEFT: Contact Form -->
+    <div class="col-md-6 mb-4">
+      <div class="contact-box">
 
+        <div id="feedback"></div>
 
-  <div id="feedback"></div>
+        <form id="contactForm">
+          <input type="text" id="name" class="form-control mb-3" placeholder="Your name">
+          <input type="email" id="email" class="form-control mb-3" placeholder="Your email">
+          <textarea id="message" class="form-control mb-3" rows="5" placeholder="Your message"></textarea>
+          <button type="submit" class="btn btn-dark w-100">Send Message</button>
+        </form>
 
-    <form id="contactForm">
-      <input type="text" id="name" class="form-control mb-3" placeholder="Your name">
-     <input type="email" id="email" class="form-control mb-3" placeholder="Your email">
-      <textarea id="message" class="form-control mb-3" rows="5" placeholder="Your message"></textarea>
-      <button type="submit" class="btn btn-dark w-100">Send Message</button>
-    </form>
+      </div>
+    </div>
+
+    <!-- RIGHT: Extra Content -->
+    <div class="col-md-6">
+      <div class="contact-info p-4">
+
+        <h3>Get in touch</h3>
+        <p>
+          Whether you’ve got a recipe idea, feedback, or just fancy a chat — we’re here for it!
+        </p>
+
+        <hr>
+
+        <h5>Email</h5>
+        <p>support@scran.com</p>
+
+        <h5>Follow us</h5>
+        <div class="d-flex gap-3">
+          <a href="#" class="btn btn-outline-dark btn-sm">Instagram</a>
+          <a href="#" class="btn btn-outline-dark btn-sm">Facebook</a>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>
 

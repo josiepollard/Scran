@@ -43,6 +43,17 @@
 
 <section class="scrandom-game container text-center py-5">
 <h2>Choose Your Scran</h2>
+<div class="container my-3">
+  <div class="d-flex justify-content-between mb-2">
+    <small id="roundText">Round 1</small>
+    <small id="progressText">0%</small>
+  </div>
+
+  <div class="progress">
+    <div id="roundProgress" class="progress-bar bg-warning" style="width: 0%"></div>
+  </div>
+</div>
+
 <div class="recipe-container d-flex justify-content-center align-items-center gap-4 flex-wrap mt-4" id="gameArea">
 
 <!-- Recipe option A will appear here -->
@@ -67,7 +78,6 @@
 
 
 <script>
-/*  Variables for the game */
 
 // This will store recipes from the API
 let recipes = [];
@@ -78,6 +88,8 @@ let pool = [];
 // The two recipes being shown
 let optionA;
 let optionB;
+let round = 1;
+const totalRounds = 9;
 
 
 
@@ -114,21 +126,24 @@ function startGame(){
 
 // Copy the recipes into the pool array
 pool = [...recipes];
-
-// Start the first round
+round = 1;
 nextRound();
-
 }
 
+function updateProgress() {
+  let percent = ((round - 1) / (totalRounds - 1)) * 100;
 
+  document.getElementById("roundText").innerText = `Round ${round}`;
+  document.getElementById("progressText").innerText = `${Math.round(percent)}%`;
+
+  document.getElementById("roundProgress").style.width = percent + "%";
+}
 
 /* Next round */
 
 function nextRound(){
-
 // If only one recipe remains, the game is over.
 if(pool.length === 1){
-
 showWinner(pool[0]);
 return;
 
@@ -141,6 +156,7 @@ optionB = pool.shift();
 // Display those recipes on screen
 displayOptions(optionA, optionB);
 
+updateProgress();
 }
 
 
@@ -206,7 +222,7 @@ pool.push(optionA);
 pool.push(optionB);
 
 }
-
+round++;
 // Start the next round
 nextRound();
 
@@ -225,7 +241,7 @@ document.getElementById("gameArea").innerHTML = `
 
 <h2>Your Scran Is...</h2>
 
-<img src="${recipe.strMealThumb}" style="width:300px;border-radius:12px">
+<img src="${recipe.strMealThumb}" class="winner-glow" style="width:300px;border-radius:12px">
 
 <h1 class="mt-3">${recipe.strMeal}</h1>
 

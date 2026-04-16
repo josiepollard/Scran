@@ -5,6 +5,11 @@
     --mustard:#fdb302;
 }
 
+.dark-mode {
+  --mustard: #8d47ac;
+}
+
+
 /* =========================
   Banners
 ========================= */
@@ -254,7 +259,63 @@
     background-position: 0% 50%;
   }
 }
+@keyframes glowPulse {
+  0% {
+    box-shadow: 
+      0 0 10px rgba(253, 179, 2, 0.4),
+      0 0 20px rgba(253, 179, 2, 0.2);
+    transform: scale(1);
+  }
 
+  50% {
+    box-shadow: 
+      0 0 25px rgba(253, 179, 2, 0.8),
+      0 0 50px rgba(253, 179, 2, 0.5),
+      0 0 80px rgba(253, 179, 2, 0.3);
+    transform: scale(1.05);
+  }
+
+  100% {
+    box-shadow: 
+      0 0 10px rgba(253, 179, 2, 0.4),
+      0 0 20px rgba(253, 179, 2, 0.2);
+    transform: scale(1);
+  }
+}
+@keyframes glowPulseDark {
+  0% {
+    box-shadow: 
+      0 0 10px rgba(141, 71, 172, 0.4),
+      0 0 20px rgba(141, 71, 172, 0.2);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 
+      0 0 25px rgba(141, 71, 172, 0.9),
+      0 0 50px rgba(141, 71, 172, 0.6),
+      0 0 80px rgba(141, 71, 172, 0.3);
+    transform: scale(1.05);
+  }
+
+  100% {
+    box-shadow: 
+      0 0 10px rgba(141, 71, 172, 0.4),
+      0 0 20px rgba(141, 71, 172, 0.2);
+    transform: scale(1);
+  }
+}
+.recipe-card .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card .card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+.winner-glow {
+  animation: glowPulse 1.5s infinite ease-in-out;
+}
 /* carousel */
 .recipes-scroll-row {
   display: flex;
@@ -327,6 +388,53 @@ body {
                 0 0px 20px var(--mustard),
                 0 0px 30px rgba(253,179,2,0.6);
 }
+.contact-info {
+  background: #f8f9fa;
+  border-radius: 15px;
+}
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Main suggestion style */
+.suggestion-item {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem;   
+  font-weight: 500;
+  padding: 14px 16px;
+  border-radius: 12px;
+
+  background: #f8f9fa;
+  border-left: 4px solid var(--mustard);
+
+  transition: all 0.2s ease;
+}
+.suggestion-item:hover {
+  transform: translateX(4px);
+  background: #fff3cd;
+}
+body.dark-mode .suggestion-item {
+  background: linear-gradient(135deg, #2a2a2a, #1e1e1e);
+  color: #f1f1f1;
+  border-left: 5px solid #8d47ac;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+body.dark-mode .suggestion-item:hover {
+  background: #333;
+}
+body.dark-mode .winner-glow {
+  animation: glowPulseDark 1.5s infinite ease-in-out;
+}
+
+/* Dark mode version */
+.dark-mode .contact-info {
+  background: #2a2a2a;
+  color: #fff;
+}
 /* =========================
    Dark/Light mode Button 
 ========================= */
@@ -334,11 +442,14 @@ body {
   border: 2px solid #fdb302;
   color: #fdb302;
   background: transparent;
-
+}
+#themeToggle:hover {
+  background: #fdb302;
+  color: #fff;
   box-shadow: 
-    0 0 10px #fdb302,
-    0 0 20px #fdb302,
-    0 0 40px rgba(253,179,2,0.9);
+    0 0 15px #fdb302,
+    0 0 30px #fdb302,
+    0 0 60px rgba(253,179,2,1);
 }
 /* =========================
    Dark mode
@@ -443,7 +554,7 @@ body.dark-mode .form-control::placeholder {
 body.dark-mode .form-control:focus {
     background-color: #212529;
     color: #ffffff;
-    border-color: #6c757d;
+    border-color: #666b6e;
     box-shadow: none;
 }
 
@@ -458,12 +569,14 @@ body.dark-mode .btn-dark:hover {
 }
 
 .dark-mode .contact-box {
-  background: #686666;
+  background: #1e1e1e;
   padding: 30px;
   border-radius: 15px;
-      box-shadow: 0 0px 10px var(--mustard),
-                0 0px 20px var(--mustard),
-                0 0px 30px rgba(253,179,2,0.6);
+
+  box-shadow: 
+    0 0px 10px var(--mustard),
+    0 0px 20px var(--mustard),
+    0 0px 30px rgba(141,71,172,0.6); 
 }
 
 .dark-mode #instructionsList li.bg-warning {
@@ -512,11 +625,9 @@ body.dark-mode .chatbot-card .btn-dark {
   border: none;
 }
 
-
 /* =========================
    font size changer
 ========================= */
-
 
 .large-text h1 { font-size: 2.5rem; }
 .large-text h2 { font-size: 2rem; }
@@ -528,13 +639,10 @@ body.dark-mode .chatbot-card .btn-dark {
   font-size: 1.3rem;
 }
 
-
-
 #instructionsList li.bg-warning {
   border-radius: 6px;
   padding: 6px;
 }
-
 
 /* Chatbot container */
 .chatbot-card {
@@ -553,7 +661,55 @@ body.dark-mode .chatbot-card .btn-dark {
   border-radius: 8px;
   font-size: 0.95rem;
 }
+/* =========================
+   Chatbot Multicolour Header
+========================= */
 
+.chatbot-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* colourful top bar */
+.chatbot-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 5px;
+  width: 100%;
+
+  background: linear-gradient(
+    90deg,
+    #fdb302,
+    #ff5ec4,
+    #36e9d1,
+    #8d47ac
+  );
+}
+.chatbot-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* LEFT chat */
+.chatbot-card {
+  flex: 2;
+  min-width: 0;
+}
+
+/* RIGHT suggestions */
+.chatbot-suggestions {
+  flex: 1;
+  min-width: 250px;
+}
+.card p {
+  font-size: 0.95rem;
+  color: #333;
+}
 /* =========================
    Media Queries
 ========================= */
@@ -581,4 +737,33 @@ body.dark-mode .chatbot-card .btn-dark {
     position: static;
     float: none;
   }
+}
+
+@media (max-width: 768px) {
+  .chatbot-layout {
+    flex-direction: column;
+  }
+
+}
+.dark-mode #themeToggle {
+  border: 2px solid #8d47ac;
+  color: #8d47ac;
+  background: transparent;
+}
+.dark-mode #themeToggle:hover {
+  background: #8d47ac;
+  color: #fff;
+  box-shadow: 
+    0 0 15px #8d47ac,
+    0 0 30px #8d47ac,
+    0 0 60px rgb(103, 25, 175);
+}
+.progress-bar#roundProgress {
+  background-color: var(--mustard) !important;
+}
+
+/* Dark mode override */
+.dark-mode .progress-bar#roundProgress {
+  background-color: #8d47ac !important;
+  box-shadow: 0 0 10px #8d47ac, 0 0 20px rgba(141,71,172,0.6);
 }

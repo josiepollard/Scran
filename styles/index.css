@@ -624,6 +624,11 @@ body.dark-mode .chatbot-card .btn-dark {
   color: #fff;
   border: none;
 }
+/* FIX review text in dark mode */
+.dark-mode .card p {
+  color: #f1f1f1;
+}
+
 
 /* =========================
    font size changer

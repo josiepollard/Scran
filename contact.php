@@ -69,8 +69,8 @@
 
         <h5>Follow us</h5>
         <div class="d-flex gap-3">
-          <a href="#" class="btn btn-outline-dark btn-sm">Instagram</a>
-          <a href="#" class="btn btn-outline-dark btn-sm">Facebook</a>
+          <a href="https://www.instagram.com/worcester_uni/" class="btn btn-outline-dark btn-sm" target="_blank">Instagram</a>
+          <a href="https://www.facebook.com/UniversityOfWorcester" class="btn btn-outline-dark btn-sm" target="_blank">Facebook</a>
         </div>
 
       </div>

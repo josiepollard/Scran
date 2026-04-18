@@ -30,7 +30,6 @@ if ($response !== false) {
 }
 
 // ADD API KEY HERE
-$apiKey = ""; // removed for security
 
 
 // Prepare request
@@ -69,7 +68,6 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
 
 $response = curl_exec($ch);
 
-// ❗ Debug if request fails
 if ($response === false) {
   echo json_encode(["reply" => "API request failed"]);
   exit;
@@ -79,7 +77,6 @@ curl_close($ch);
 
 $result = json_decode($response, true);
 
-// ❗ Debug if API error
 if (isset($result["error"])) {
   echo json_encode(["reply" => "OpenAI error: " . $result["error"]["message"]]);
   exit;

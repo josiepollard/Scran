@@ -28,9 +28,9 @@
       <div class="col-md-4 mb-4">
         <h5>Follow Us</h5>
         <div class="d-flex gap-3 mt-3">
-          <a href="https://www.facebook.com/" class="social-link">Facebook</a>
-          <a href="https://www.instagram.com/" class="social-link">Instagram</a>
-          <a href="https://x.com/" class="social-link">X</a>
+          <a href="https://www.facebook.com/UniversityOfWorcester" class="social-link" target="_blank">Facebook</a>
+          <a href="https://www.instagram.com/worcester_uni/" class="social-link" target="_blank">Instagram</a>
+         
         </div>
       </div>
 

@@ -14,7 +14,7 @@ saved recipe page
   $user_id = $_SESSION["user_id"];
   $savedMealIds = [];
 
-  $stmt = $conn->prepare("SELECT meal_id FROM saved_recipes WHERE user_id = ORDER BY created_at DESC");
+
   $stmt = $conn->prepare("SELECT meal_id FROM saved_recipes WHERE user_id = ? ORDER BY created_at DESC");
   $stmt->bind_param("i", $user_id);
   $stmt->execute();

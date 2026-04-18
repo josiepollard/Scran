@@ -62,6 +62,13 @@
 
 let chatHistory = [];
 
+document.getElementById("chatInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault(); // stop page refresh / form submit
+    sendMessage();
+  }
+});
+
 async function sendMessage() {
   const input = document.getElementById("chatInput");
   const chatBox = document.getElementById("chatBox");

@@ -50,16 +50,11 @@
 </div>
 </div>
 
-
-
-
 <!-- footer -->
 <?php include 'includes/footer.php'; ?>
 
 
-
 <script>
-
 let chatHistory = [];
 
 document.getElementById("chatInput").addEventListener("keydown", function(e) {
@@ -82,7 +77,6 @@ async function sendMessage() {
 
   chatBox.scrollTop = chatBox.scrollHeight;
 
-  // ✅ Add to history BEFORE sending
   chatHistory.push({ role: "user", content: message });
 
   try {
@@ -96,7 +90,6 @@ async function sendMessage() {
 
     const data = await res.json();
 
-    // ✅ Save bot reply
     chatHistory.push({ role: "assistant", content: data.reply });
 
     // Show bot message
@@ -115,7 +108,5 @@ async function sendMessage() {
   }
 }
 </script>
-
-
 </body>
 </html>

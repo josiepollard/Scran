@@ -145,7 +145,7 @@
 </section>
 
 
-<!-- FOOTER START -->
+<!-- FOOTER -->
 <?php include 'includes/footer.php'; ?>
 
 
@@ -154,17 +154,12 @@
 const savedMealIds = <?php echo json_encode($savedMealIds); ?>; // pass PHP array of saved meal IDs to JavaScript
 const isLoggedIn = <?php echo isset($_SESSION["user_id"]) ? 'true' : 'false'; ?>; // check if user is logged in
 
-//=================================
 // Shorten long recipe names
-//=================================
 function shortenText(text, maxLength) {
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
 
-
-//=================================
 // Create recipe card HTML
-//=================================
 function createRecipeCard(meal) {
 
   const isSaved = savedMealIds.includes(meal.idMeal);// check if meal is saved by the user
@@ -207,9 +202,7 @@ function createRecipeCard(meal) {
   `;
 }
 
-//=================================
 // Fetch random recipes and populate carousel
-//=================================
 async function getRandomRecipesCarousel() {
   const row = document.getElementById("recipes-row");
   row.innerHTML = `<div class="text-center py-5 w-100">Loading recipes...</div>`;
@@ -253,13 +246,11 @@ async function getRandomRecipesCarousel() {
     }
 }
 
-//=================================
 // carousel scroll function
-//=================================
 function scrollRecipes(direction) {
+
   const row = document.getElementById("recipes-row"); // reference to the carousel row
   const firstCard = row.querySelector(".recipe-scroll-item"); // reference to the first card to calculate scroll amount
-
 
   if (!firstCard) return;
 
@@ -291,10 +282,7 @@ function scrollRecipes(direction) {
 }
 
 
-
-//=================================
 // save/unsave recipe for logged in user
-//=================================
     async function toggleSave(mealId, button){
     
       try{ 
@@ -340,12 +328,7 @@ function scrollRecipes(direction) {
     }
 
 
-
-
-
-//=================================
 // scroll carousel automatically every 6 seconds
-//=================================
 let autoScrollInterval;
 
 function startAutoScroll(){
@@ -354,9 +337,8 @@ function startAutoScroll(){
   }, 6000); // 6 seconds
 }
 
-//=================================
+
 // load recently viewed recipes from localStorage 
-//=================================
 async function loadRecentRecipes(){
 
   const row = document.getElementById("recent-row");
@@ -393,7 +375,7 @@ async function loadRecentRecipes(){
 // Load recipes and start auto-scroll when page is ready
   document.addEventListener("DOMContentLoaded", () => {
     getRandomRecipesCarousel();
-    loadRecentRecipes(); // 👈 ADD THIS
+    loadRecentRecipes(); 
     startAutoScroll();
   });
 </script>

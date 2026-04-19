@@ -60,24 +60,17 @@
   <?php include 'includes/footer.php'; ?>
 
 
-  
   <script>
-
     const savedMealIds = <?php echo json_encode($savedMealIds); ?>;// pass PHP array to JS
     const isLoggedIn = <?php echo isset($_SESSION["user_id"]) ? 'true' : 'false'; ?>; // check if user is logged in
 
-  //=================================
   // Shorten long recipe names
-  //=================================
     function shortenText(text, maxLength){
       return text.length > maxLength ? text.slice(0,maxLength) + "..." : text;
     }
     
-  //=================================
   // Create recipe card HTML
-  //=================================
     function createRecipeCard(meal){
-    
       const isSaved = savedMealIds.includes(meal.idMeal); // check if meal is saved by the user
       
       return `
@@ -120,13 +113,10 @@
       `;
     }
     
-  //=================================
   // Fetch breakfast recipes from API and display
-  //=================================
     async function loadBreakfastRecipes(){
 
       const container = document.getElementById("breakfast-container"); // reference to HTML container for recipe cards
-
       container.innerHTML = `<div class="text-center py-5">Loading recipes...</div>`; // show loading message while fetching
       
       try{
@@ -144,9 +134,7 @@
     }
     
     
-  //=================================
   // save/unsave recipe for logged in user
-  //=================================
     async function toggleSave(mealId, button){
     
       try{ 
@@ -193,6 +181,7 @@
     
     // Load recipes when page is ready
      document.addEventListener("DOMContentLoaded", loadBreakfastRecipes);
+     
   </script>
 </body>
 </html>

@@ -60,16 +60,12 @@
 const savedMealIds = <?php echo json_encode($savedMealIds); ?>;
 const isLoggedIn = <?php echo isset($_SESSION["user_id"]) ? 'true' : 'false'; ?>;
 
-//=================================
-// Shorten long recipe names
-//=================================
+
 function shortenText(text, maxLength){
   return text.length > maxLength ? text.slice(0,maxLength) + "..." : text;
 }
 
-//=================================
-// Create recipe card HTML
-//=================================
+
 function createRecipeCard(meal){
 
   const isSaved = savedMealIds.includes(meal.idMeal);
@@ -105,7 +101,6 @@ function createRecipeCard(meal){
                   Log in to save
               </a>`
           }
-
         </div>
       </div>
     </div>
@@ -114,9 +109,6 @@ function createRecipeCard(meal){
 }
 
 
-//=================================
-// Fetch recipes from API and display
-//=================================
 async function loadVeganRecipes(){
 
   const container = document.getElementById("vegan-container");
@@ -138,9 +130,6 @@ async function loadVeganRecipes(){
 }
 
 
-//=================================
-  // save/unsave recipe for logged in user
-  //=================================
     async function toggleSave(mealId, button){
     
       try{ 
@@ -188,7 +177,5 @@ async function loadVeganRecipes(){
 
   document.addEventListener("DOMContentLoaded", loadVeganRecipes);
 </script>
-
-
 </body>
 </html>

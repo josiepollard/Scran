@@ -85,16 +85,12 @@
 let allMeals = []; // will hold fetched meals
 let currentSort = "az"; // default sort
 
-//=================================
-// Shorten long recipe names
-//=================================
+
 function shortenText(text, maxLength) {
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
 
-//=================================
 // Create recipe card HTML
-//=================================
 function createRecipeCard(meal){
 
   const isSaved = savedMealIds.includes(meal.idMeal);
@@ -129,7 +125,6 @@ function createRecipeCard(meal){
                   Log in to save
               </a>`
           }
-
         </div>
       </div>
     </div>
@@ -137,9 +132,8 @@ function createRecipeCard(meal){
   `;
 }
 
-//=================================
+
 // sort recipes 
-//=================================
 function sortMeals(meals){
 
   // Sort by newest or oldest based on meal ID (assuming higher ID is newer)
@@ -160,15 +154,11 @@ function sortMeals(meals){
     else{
     return b.strMeal.localeCompare(a.strMeal);
     }
-
   });
-
 }
 
 
-//=================================
 // render meals to page
-//=================================
 function renderMeals(meals){
 
   const container = document.getElementById("recipes-container"); // reference to HTML container for recipe cards
@@ -186,10 +176,7 @@ function renderMeals(meals){
 }
 
 
-
-//=================================
 // load all meals from API 
-//=================================
 async function loadAllMeals(){
 
   const container = document.getElementById("recipes-container"); // reference to HTML container for recipe cards
@@ -211,14 +198,10 @@ async function loadAllMeals(){
     container.innerHTML = `<p class="text-danger text-center">Failed to load recipes.</p>`;
 
   }
-
 }
 
 
-
-//=================================
 // search filter meals by name
-//=================================
 function filterMeals(){
 
   const searchValue =
@@ -235,9 +218,7 @@ function filterMeals(){
 
 
 
-//=================================
 // save/unsave recipe for logged in user
-//=================================
     async function toggleSave(mealId, button){
     
       try{ 
@@ -282,7 +263,6 @@ function filterMeals(){
       }
     }
     
-
 
   document.addEventListener("DOMContentLoaded", ()=>{
 

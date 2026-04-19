@@ -13,8 +13,6 @@ saved recipe page
 
   $user_id = $_SESSION["user_id"];
   $savedMealIds = [];
-
-
   $stmt = $conn->prepare("SELECT meal_id FROM saved_recipes WHERE user_id = ? ORDER BY created_at DESC");
   $stmt->bind_param("i", $user_id);
   $stmt->execute();
@@ -66,9 +64,7 @@ saved recipe page
 <script>
 const savedMealIds = <?php echo json_encode($savedMealIds); ?>; 
 
-//=================================
 // recipe card html
-//=================================
 function createSavedRecipeCard(meal) {
   return `
     <div class="col">
@@ -77,10 +73,8 @@ function createSavedRecipeCard(meal) {
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">${meal.strMeal}</h5>
           <p class="text-muted">${meal.strCategory || ""} ${meal.strArea ? "| " + meal.strArea : ""}</p>
-
           <div class="mt-auto d-grid gap-2">
             <a href="recipe.php?id=${meal.idMeal}" class="btn btn-warning">View Recipe</a>
-
             <form method="POST" action="removeSavedRecipe.php">
               <input type="hidden" name="recipe_id" value="${meal.idMeal}">
               <button type="submit" class="btn btn-outline-danger w-100">Remove</button>
@@ -92,9 +86,8 @@ function createSavedRecipeCard(meal) {
   `;
 }
 
-//=================================
-// load saved recipes
-//=================================
+
+// load saved recipe
 async function loadSavedRecipes() {
 
   const container = document.getElementById("saved-recipes-container");

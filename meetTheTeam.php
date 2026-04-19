@@ -17,10 +17,9 @@
 
 <body class="page-meetTheTeam">
 
-<!-- NAVBAR -->
+
 <?php include 'includes/navbar.php'; ?>
 
-<!-- Banner -->
 <section class="scran-hero-main d-flex align-items-center justify-content-center text-center">
   <div class="scran-hero-main-overlay"></div>
   <div class="scran-hero-main-content container">
@@ -28,18 +27,16 @@
   </div>
 </section>
 
-<!-- ABOUT + IMAGE SIDE BY SIDE -->
 <section class="py-5">
   <div class="container">
     <div class="row align-items-center">
       
-      <!-- Text -->
       <div class="col-md-6">
         <p class="lead">
-          SCRAN is a project designed to make discovering recipes simple and accessible for everyone.<br><br>
+          SCRAN is a project designed to make discovering recipes simple and accessible.<br><br>
 
-          We are a team of students working collaboratively to design and develop this website as part of our coursework. 
-          Each member of the team has contributed their skills across planning, design, development, and research to bring SCRAN to life.
+          We are a team of students working together to design and develop this website as part of our university work. 
+          Each member of the team has contributed their skills across planning, design, development, and research to help bring SCRAN to life.
         </p>
       </div>
 
@@ -52,8 +49,6 @@
   </div>
 </section>
 
-
-<!-- TEAM SECTION -->
 <section class="team-section py-5">
   <div class="container">
     <div class="row g-4">
@@ -81,9 +76,7 @@
           <p class="text-muted">Systems Analyst & Business Analyst </p>
         </div>
       </div>
-
-      
-
+  
       <div class="col-md-6 col-lg-3">
         <div class="team-card text-center">
           <img src="images/callum.png" class="img-fluid rounded-circle mb-3" alt="Callum Photo">
@@ -91,17 +84,11 @@
           <p class="text-muted">Developer & Researcher</p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-
-
-
 <!-- FOOTER -->
 <?php include 'includes/footer.php'; ?>
-
-
 </body>
 </html>

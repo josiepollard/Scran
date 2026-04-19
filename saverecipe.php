@@ -23,8 +23,8 @@ if ($meal_id === "") {
     exit();
 }
 
-$stmt = $conn->prepare("INSERT IGNORE INTO saved_recipes (user_id, meal_id) VALUES (?, ?)"); // Use INSERT IGNORE to prevent duplicates
-$stmt->bind_param("is", $user_id, $meal_id); // Bind user ID as integer and meal ID as string
+$stmt = $conn->prepare("INSERT IGNORE INTO saved_recipes (user_id, meal_id) VALUES (?, ?)"); 
+$stmt->bind_param("is", $user_id, $meal_id); 
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);

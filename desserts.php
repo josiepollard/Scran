@@ -62,16 +62,12 @@
 const savedMealIds = <?php echo json_encode($savedMealIds); ?>;
 const isLoggedIn = <?php echo isset($_SESSION["user_id"]) ? 'true' : 'false'; ?>; // check if user is logged in
 
-//================================
 // Shorten long recipe names
-//=================================
 function shortenText(text, maxLength){
   return text.length > maxLength ? text.slice(0,maxLength) + "..." : text;
 }
 
-//=================================
 // Create recipe card HTML
-//=================================
   function createRecipeCard(meal){
     
     const isSaved = savedMealIds.includes(meal.idMeal); // check if meal is saved by the user
@@ -85,11 +81,10 @@ function shortenText(text, maxLength){
             alt="${meal.strMeal}">
 
         <div class="card-body d-flex flex-column">
-    
           <h5 class="card-title" title="${meal.strMeal}">
             ${shortenText(meal.strMeal,25)}
           </h5>
-    
+
           <div class="mt-auto d-grid gap-2">
     
             <a href="recipe.php?id=${meal.idMeal}"
@@ -115,10 +110,6 @@ function shortenText(text, maxLength){
     </div>
     `;
   }
-
-//=================================
-// Fetch dessert recipes from API and display
-//=================================
   async function loadDessertRecipes(){
 
     const container = document.getElementById("dessert-container");
@@ -138,10 +129,7 @@ function shortenText(text, maxLength){
 
   }
 
-
-//=================================
 // save/unsave recipe for logged in user
-//=================================
   async function toggleSave(mealId, button){
   
     try{ 

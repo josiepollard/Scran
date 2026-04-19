@@ -29,8 +29,7 @@ if ($response !== false) {
   }
 }
 
-// ADD API KEY HERE
-
+// API KEY HERE
 
 // Prepare request
 $postData = [
@@ -55,7 +54,6 @@ Use this recipe data if relevant:\n" . $mealData
   )
 ];
 
-// cURL request
 $ch = curl_init("https://api.openai.com/v1/chat/completions");
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -32,12 +32,9 @@
 </section>
 
 
-
-<!-- CONTACT SECTION -->
 <div class="container my-5">
   <div class="row align-items-start">
 
-    <!-- LEFT: Contact Form -->
     <div class="col-md-6 mb-4">
       <div class="contact-box">
 
@@ -49,11 +46,9 @@
           <textarea id="message" class="form-control mb-3" rows="5" placeholder="Your message"></textarea>
           <button type="submit" class="btn btn-dark w-100">Send Message</button>
         </form>
-
       </div>
     </div>
 
-    <!-- RIGHT: Extra Content -->
     <div class="col-md-6">
       <div class="contact-info p-4">
 
@@ -72,10 +67,8 @@
           <a href="https://www.instagram.com/worcester_uni/" class="btn btn-outline-dark btn-sm" target="_blank">Instagram</a>
           <a href="https://www.facebook.com/UniversityOfWorcester" class="btn btn-outline-dark btn-sm" target="_blank">Facebook</a>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>
 
@@ -123,9 +116,6 @@
 
     });
 </script>
-
-
-
 
 </body>
 </html>

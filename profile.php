@@ -69,9 +69,7 @@ if (!isset($_SESSION["user_id"])) {
 
 <script>
 
-//=================================
 // change name 
-//=================================
 async function updateName(){
   const name = document.getElementById("nameInput").value; // get new name from input
 
@@ -93,9 +91,7 @@ async function updateName(){
   }
 }
 
-//=================================
 // change password
-//=================================
 async function changePassword(){
 
   const current = document.getElementById("currentPassword").value; // get current password from input
@@ -113,9 +109,8 @@ async function changePassword(){
   alert(data.message);
 }
 
-//=================================
+
 // delete account
-//=================================
 async function deleteAccount(){
 
 // confirm deletion with user
@@ -134,7 +129,6 @@ async function deleteAccount(){
     alert("Error deleting account");
   }
 }
-
 </script>
 </body>
 </html>

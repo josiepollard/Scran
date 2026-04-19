@@ -2,8 +2,6 @@
 individual recipe page. 
 * loads recipe details from TheMealDB API based on ID 
  -->
- 
-
 <?php
   include "config.php";
 
@@ -76,14 +74,13 @@ while($row = $result->fetch_assoc()){
 
 
 <script>
+  
 const savedMealIds = <?php echo json_encode($savedMealIds); ?>; 
 const params = new URLSearchParams(window.location.search); 
 const mealId = params.get("id"); 
 
 
-//=================================
 // ingredients 
-//=================================
 function getIngredients(meal){
 
   let ingredients = []; // array to hold ingredient strings
@@ -98,14 +95,11 @@ function getIngredients(meal){
       ingredients.push(`${measure} ${ingredient}`);
     }
   }
-
   return ingredients;
 }
 
 
-// =========================
 // steps
-// =========================
 function getSteps(instructions){
 
   const text = instructions.replace(/\r/g, ""); // remove carriage returns
@@ -132,9 +126,7 @@ function getSteps(instructions){
 }
 
 
-//=================================
 // youtube embed
-//=================================
 function getYouTubeEmbed(url) {
   if (!url) return null; 
 
@@ -145,10 +137,7 @@ function getYouTubeEmbed(url) {
 }
 
 
-
-//=================================
 // youtube embed
-//=================================
 function getSaveButton(mealId) {
   <?php if (isset($_SESSION['user_id'])): ?>
 
@@ -172,9 +161,7 @@ function getSaveButton(mealId) {
 }
 
 
-// =========================
 // LOAD RECIPE
-// =========================
 async function loadRecipe(){
 
   const container = document.getElementById("recipe-container");
@@ -246,8 +233,6 @@ async function loadRecipe(){
   ${stepsList}
 </ol>
 </div>
-
-      
 
       ${videoUrl ? `
       <div class="mt-5">
@@ -338,9 +323,7 @@ async function loadRecipe(){
 }
 
 
-// =========================
 // save recipe
-// =========================
 async function saveRecipe(mealId, button) {
   try {
     const response = await fetch("saveRecipe.php", {
@@ -401,9 +384,7 @@ async function toggleSave(mealId, button) {
   }
 }
 
-// =========================
 // RECENTLY VIEWED STORAGE
-// =========================
 function saveRecentlyViewed(mealId){
   let recent = JSON.parse(localStorage.getItem("recentRecipes")) || [];
 
@@ -419,9 +400,8 @@ function saveRecentlyViewed(mealId){
   localStorage.setItem("recentRecipes", JSON.stringify(recent));
 }
 
-// =========================
+
 // REVIEWS
-// =========================
 async function submitReview(){
 
   const comment = document.getElementById("reviewText").value.trim();
@@ -464,11 +444,8 @@ document.getElementById("reviewsList").insertAdjacentHTML("afterbegin", `
           <i class="bi bi-trash"></i>
         </button>
       </div>
-
     </div>
-
     <p class="mt-2 mb-0">${comment}</p>
-
   </div>
 `);
 
@@ -481,6 +458,7 @@ document.getElementById("reviewsList").insertAdjacentHTML("afterbegin", `
   }
 }
 
+// delete review
 async function deleteReview(){
 
   if(!confirm("Delete your review?")) return;
@@ -498,7 +476,7 @@ async function deleteReview(){
   }
 }
 
-// Run when page loads
+
 document.addEventListener("DOMContentLoaded", () => {
   if(mealId){
     saveRecentlyViewed(mealId);
@@ -506,9 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// =========================
 // RECIPE STEPS
-// =========================
 let steps = []; // array to hold instruction steps
 let currentStep = 0; // index of current step being read
 let speech = null; // Holds the current speech object
@@ -517,7 +493,6 @@ let isPaused = false; // flag to track if instructions are currently paused
 let autoNextTimeout = null; // timeout ID for auto-advancing to next step
 const STEP_DELAY = 1000; // 1 seconds delay between steps when auto-advancing
 
-// Load steps from DOM
 function loadSteps() {
   const list = document.getElementById("instructionsList");
   if (!list) return;
@@ -669,7 +644,6 @@ function togglePlayPause() {
     btn.textContent = "Pause";
   }
 }
-
 
 document.addEventListener("DOMContentLoaded", loadRecipe);
 </script>
